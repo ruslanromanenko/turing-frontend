@@ -1,0 +1,11 @@
+.Size{
+    width: 30px;
+    height: 30px;
+    background-color: deeppink;
+    border: 2px solid grey;
+}
+
+.Size:hover{
+    border-color: #f62f5e;
+    cursor: pointer;
+}

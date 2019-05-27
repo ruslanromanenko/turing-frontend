@@ -1,0 +1,53 @@
+.Product{
+    background-color: white;
+    max-width: 23%;
+    width: 100%;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+
+.Product:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.Product img{
+    max-width: 50%;
+    height: auto;
+}
+
+.Prices{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.price{
+    color: #f62f5e;
+    text-decoration: line-through;
+}
+
+.DiscountedPrice{
+    color: #f62f5e;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.Description{
+    text-align: left;
+}
+
+@media screen and (max-width: 1600px) {
+    .Product{
+        max-width: 30%;
+    }
+}

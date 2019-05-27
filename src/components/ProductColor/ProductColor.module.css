@@ -1,0 +1,40 @@
+.Color{
+    width: 30px;
+    height: 30px;
+    background-color: deeppink;
+    border: 2px solid grey;
+    border-radius: 50%;
+}
+
+.Color:hover{
+    border-color: #f62f5e;
+    cursor: pointer;
+}
+
+.White{
+    background-color: white;
+}
+.Black{
+    background-color: black;
+}
+.Red{
+    background-color: red;
+}
+.Orange{
+    background-color: orange;
+}
+.Yellow{
+    background-color: yellow;
+}
+.Green{
+    background-color: green;
+}
+.Blue{
+    background-color: blue;
+}
+.Indigo{
+    background-color: indigo;
+}
+.Purple{
+    background-color: purple;
+}

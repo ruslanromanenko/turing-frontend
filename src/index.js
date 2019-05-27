@@ -1,10 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Home from './containers/Home/Home';
+import { Provider } from 'react-redux';
+import createStore from './store';
+import {BrowserRouter} from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore();
+const aplication = (
+    <BrowserRouter>
+        <Provider store={store}>
+            <Home />
+        </Provider>
+    </BrowserRouter>
+)
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+// setTimeout(function () {
+//     store.dispatch({
+//         type: 'SET_GOODS',
+//         payload: [
+//             {
+//                 id: 0,
+//                 title: 'Change Books'
+//             }
+//         ]
+//
+//     })
+// }, 1000);
+
+ReactDOM.render(
+    aplication
+    , document.getElementById('root')
+);

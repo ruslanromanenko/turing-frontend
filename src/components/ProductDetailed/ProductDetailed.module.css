@@ -1,0 +1,26 @@
+.closeButton{
+    position: absolute !important;
+    right: 10px;
+    top: 10px;
+    color: grey;
+}
+
+.DialogContent{
+    display: flex;
+    justify-content: space-between;
+}
+
+.contentBlock{
+    max-width: 70%;
+}
+
+.ColorsBlock{
+    display: flex;
+    flex-direction: column;
+}
+.ColorsBlock .Colors{
+    display: flex;
+}
+.SizesBlock .Sizes{
+    display: flex;
+}

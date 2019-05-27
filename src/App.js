@@ -1,24 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
+import './store';
+import { getCategories } from './actions/categories';
+// import goods from './goods';
+import axios from 'axios';
+import {Route} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  componentWillMount() {
+    const { setGoods } = this.props;
+    axios.get('https://backendapi.turing.com/products/').then(({ data }) =>{
+      console.log(data)
+      setGoods(data.rows)
+    });
+  }
+
+  render (){
+    const { goods } = this.props;
+    return(
+        <ul>
+          {
+            !goods
+              ? 'Загрузка...'
+              : goods.map( (product, index) => (
+                <li key={index}>
+                  <b>{ product.title }</b> - {product.author}
+                </li>
+            ))
+          }
+        </ul>
+    )
+  }
 }
 
-export default App;
+const mapStateToProps = ({ goods }) => ({
+  goods: goods.items
+});
+
+const mapDispatchToProps = dispatch => ({
+  getCategories: category => dispatch(getCategories(category))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

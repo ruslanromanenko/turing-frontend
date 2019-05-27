@@ -1,0 +1,23 @@
+.MainHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 100px;
+    height: 100%;
+    padding: 0 60px;
+}
+
+.MainMenu ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+
+}
+.MainMenu ul a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.MainMenu {
+    flex-basis: 30%;
+}
