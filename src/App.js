@@ -1,47 +1,27 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import './App.css';
-import './store';
-import { getCategories } from './actions/categories';
-// import goods from './goods';
-import axios from 'axios';
-import {Route} from 'react-router-dom';
+import React, { Component } from "react";
+import MainHeader from "../../components/MainHeader/MainHeader";
+import NavHeader from "../../components/NavHeader/NavHeader";
+import classes from "./Home.module.css";
+import { Route } from "react-router-dom";
+import Categories from "../Categories/Categories";
+import Footer from "../../components/Footer/Footer";
 
-
-class App extends Component {
-
-  componentWillMount() {
-    const { setGoods } = this.props;
-    axios.get('https://backendapi.turing.com/products/').then(({ data }) =>{
-      console.log(data)
-      setGoods(data.rows)
-    });
-  }
-
-  render (){
-    const { goods } = this.props;
-    return(
-        <ul>
-          {
-            !goods
-              ? 'Загрузка...'
-              : goods.map( (product, index) => (
-                <li key={index}>
-                  <b>{ product.title }</b> - {product.author}
-                </li>
-            ))
-          }
-        </ul>
-    )
+class Home extends Component {
+  render() {
+    return (
+      <React.Fragment>
+        <header className={classes.Header}>
+          <MainHeader />
+          <NavHeader />
+        </header>
+        <main>
+          <Route path="/" exact render={() => <h1>Home page</h1>} />
+          <Route path="/categories" component={Categories} />
+        </main>
+        <Footer />
+      </React.Fragment>
+    );
   }
 }
 
-const mapStateToProps = ({ goods }) => ({
-  goods: goods.items
-});
-
-const mapDispatchToProps = dispatch => ({
-  getCategories: category => dispatch(getCategories(category))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default Home;
