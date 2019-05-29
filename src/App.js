@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import MainHeader from "../../components/MainHeader/MainHeader";
-import NavHeader from "../../components/NavHeader/NavHeader";
-import classes from "./Home.module.css";
+import MainHeader from "./components/MainHeader/MainHeader";
+import NavHeader from "./components/NavHeader/NavHeader";
+import classes from "./App.module.css";
 import { Route } from "react-router-dom";
-import Categories from "../Categories/Categories";
-import Footer from "../../components/Footer/Footer";
+import Categories from "./containers/Categories/Categories";
+import Footer from "./components/Footer/Footer";
 
 class Home extends Component {
   render() {
