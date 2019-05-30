@@ -1,27 +1,20 @@
 import React from "react";
 import classes from "./Categories.module.css";
+import { connect } from "react-redux";
+import ProductDetailed from "../ProductDetailed/ProductDetailed";
 import Filters from "../../components/Filters/Filters";
 import Product from "../../components/Product/Products";
-import axios from "axios";
-import { connect } from "react-redux";
-import ProductDetailed from "../../components/ProductDetailed/ProductDetailed";
-import Dialog from "@material-ui/core/Dialog";
 import { fetchProducts } from "../../actions";
-
-// установить плагин для форматрирования и использовать его prettier
-// подключить redux-thunk
-// перенести запросы в отдельный файл
-// внести правки на мои коментарии
-// запрос на получение дополнительных данных по продукту перенести внутрь компонента по продукту
 
 class Categories extends React.Component {
   state = {
     attributesProduct: null,
-    currentProduct: null
+    selectedProductId: null
   };
 
   handleClose = () => {
     this.setState({ currentProduct: null });
+    this.setState({ selectedProductId: null });
   };
 
   componentDidMount() {
@@ -29,21 +22,7 @@ class Categories extends React.Component {
   }
 
   handleClickProduct = evt => {
-    axios
-      .get(
-        `https://backendapi.turing.com/attributes/inProduct/${
-          evt.currentTarget.id
-        }`
-      )
-      .then(({ data }) => {
-        this.setState({ attributesProduct: data });
-      });
-
-    const currentProduct = this.props.goods.find(product => {
-      return product.product_id == evt.currentTarget.id;
-    });
-
-    this.setState({ currentProduct: currentProduct });
+    this.setState({ selectedProductId: evt.currentTarget.id });
   };
 
   render() {
@@ -53,20 +32,20 @@ class Categories extends React.Component {
         <div className={classes.ProductList}>
           {this.props.isLoading
             ? "loading"
-            : this.props.goods.map(product => {
+            : this.props.products.map(product => {
                 return (
                   <Product
                     product={product}
                     key={product.product_id}
-                    onClickProduct={this.handleClickProduct} // TODO name it just onClick
+                    onClick={this.handleClickProduct} // TODO name it just onClick
                   />
                 );
               })}
-          {this.state.currentProduct !== null && (
+          {this.state.selectedProductId !== null && (
             <ProductDetailed
-              open={this.state.currentProduct !== null}
+              open={this.state.selectedProductId !== null}
               onClose={this.handleClose}
-              product={this.state.currentProduct}
+              productId={this.state.selectedProductId}
             />
           )}
         </div>
@@ -75,10 +54,10 @@ class Categories extends React.Component {
   }
 }
 
-const mapStateToProps = ({ goods }) => {
+const mapStateToProps = ({ products }) => {
   return {
-    goods: goods.goods,
-    isLoading: goods.isLoading
+    products: products.products,
+    isLoading: products.isLoading
   };
 };
 const mapDispatchToProps = dispatch => {
