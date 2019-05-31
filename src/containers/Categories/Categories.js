@@ -8,13 +8,13 @@ import { fetchProducts } from "../../actions";
 
 class Categories extends React.Component {
   state = {
-    attributesProduct: null,
     selectedProductId: null
   };
 
   handleClose = () => {
-    this.setState({ currentProduct: null });
-    this.setState({ selectedProductId: null });
+    this.setState({
+      selectedProductId: null
+    });
   };
 
   componentDidMount() {
@@ -25,19 +25,26 @@ class Categories extends React.Component {
     this.setState({ selectedProductId: evt.currentTarget.id });
   };
 
+  // shouldComponentUpdate(nextProps, nextState, nextContext) {
+  //   return (
+  //     this.props.products.length !== nextProps.products.length ||
+  //     this.state.selectedProductId !== nextState.selectedProductId
+  //   );
+  // }
+
   render() {
     return (
       <div className={classes.Categories}>
         <Filters />
         <div className={classes.ProductList}>
-          {this.props.isLoading
-            ? "loading"
+          {this.props.isLoadingProducts
+            ? "Loading product"
             : this.props.products.map(product => {
                 return (
                   <Product
                     product={product}
                     key={product.product_id}
-                    onClick={this.handleClickProduct} // TODO name it just onClick
+                    onClick={this.handleClickProduct}
                   />
                 );
               })}
@@ -57,14 +64,16 @@ class Categories extends React.Component {
 const mapStateToProps = ({ products }) => {
   return {
     products: products.products,
-    isLoading: products.isLoading
+    isLoadingProducts: products.isLoadingProducts
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     getProducts: () => dispatch(fetchProducts())
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -3,7 +3,8 @@ import {
   PRODUCTS_FETCHED,
   PRODUCTS_LOADING,
   ATTRIBUTES_LOADING,
-  ATTRIBUTES_FETCHED
+  ATTRIBUTES_FETCHED,
+  ADD_TO_CART
 } from "../actions/types";
 
 export const fetchProducts = () => dispatch => {
@@ -43,6 +44,13 @@ export const fetchAttributes = productId => dispatch => {
         // dispatch(apologize('The Sandwich Shop', forPerson, error))
       }
     );
+};
+
+export const addingToCart = productId => dispatch => {
+  return dispatch({
+    type: ADD_TO_CART,
+    payload: productId
+  });
 };
 
 // export const getCategories = category => ({

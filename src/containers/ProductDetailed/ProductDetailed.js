@@ -11,10 +11,15 @@ import ProductPrice from "../../components/ProductPrice/ProductPrice";
 import ProductDiscountedPrice from "../../components/ProductDiscountedPrice/ProductDiscountedPrice";
 import ProductColor from "../../components/ProductColor/ProductColor";
 import ProductSize from "../../components/ProductSize/ProductSize";
-import { fetchAttributes } from "../../actions";
+import { fetchAttributes, addingToCart } from "../../actions";
 import Button from "@material-ui/core/Button/index";
 
 class ProductDetailed extends React.Component {
+  state = {
+    colorId: null,
+    sizeId: null
+  };
+
   componentDidMount() {
     this.props.getAttributes(this.props.productId);
   }
@@ -35,6 +40,27 @@ class ProductDetailed extends React.Component {
     }
     return [];
   };
+
+  handleAddToCart = evt => {
+    this.props.addToCart(evt.currentTarget.id);
+    this.setState({
+      colorId: null,
+      sizeId: null
+    });
+  };
+
+  handleSelectColor = evt => {
+    this.setState({
+      colorId: evt.currentTarget.id
+    });
+  };
+
+  handleSelectSize = evt => {
+    this.setState({
+      sizeId: evt.currentTarget.id
+    });
+  };
+
   render() {
     const foundIndex = this.props.products.findIndex(
       product => product.product_id == this.props.productId
@@ -78,13 +104,15 @@ class ProductDetailed extends React.Component {
               <div className={classes.ColorsBlock}>
                 <h3>Color</h3>
                 <div className={classes.Colors}>
-                  {this.props.isLoading
+                  {this.props.isLoadingAttributes
                     ? "loading"
                     : this.getColors(product.attributes).map((color, index) => {
                         return (
                           <ProductColor
                             color={color.attribute_value}
+                            id={color.attribute_value_id}
                             key={index}
+                            onClick={this.handleSelectColor}
                           />
                         );
                       })}
@@ -93,13 +121,15 @@ class ProductDetailed extends React.Component {
               <div className={classes.SizesBlock}>
                 <h3>Size</h3>
                 <div className={classes.Sizes}>
-                  {this.props.isLoading
+                  {this.props.isLoadingAttributes
                     ? "loading"
                     : this.getSizes(product.attributes).map((size, index) => {
                         return (
                           <ProductSize
                             size={size.attribute_value}
                             key={index}
+                            onClick={this.handleSelectSize}
+                            id={size.attribute_value_id}
                           />
                         );
                       })}
@@ -109,6 +139,8 @@ class ProductDetailed extends React.Component {
                 variant="contained"
                 color="secondary"
                 className={classes.AddToCart}
+                onClick={this.handleAddToCart}
+                id={this.props.productId}
               >
                 Add to Cart
               </Button>
@@ -123,12 +155,13 @@ class ProductDetailed extends React.Component {
 const mapStateToProps = ({ products }) => {
   return {
     products: products.products,
-    isLoading: products.isLoading
+    isLoadingAttributes: products.isLoadingAttributes
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAttributes: productId => dispatch(fetchAttributes(productId))
+    getAttributes: productId => dispatch(fetchAttributes(productId)),
+    addToCart: productId => dispatch(addingToCart(productId))
   };
 };
 

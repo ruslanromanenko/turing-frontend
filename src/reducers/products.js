@@ -6,7 +6,8 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  isLoading: false,
+  isLoadingProducts: false,
+  isLoadingAttributes: false,
   products: [],
   openedProductId: null
 };
@@ -16,18 +17,18 @@ export default (state = initialState, action) => {
     case PRODUCTS_LOADING:
       return {
         ...state,
-        isLoading: action.payload
+        isLoadingProducts: action.payload
       };
     case PRODUCTS_FETCHED:
       return {
         ...state,
         products: action.payload,
-        isLoading: false
+        isLoadingProducts: false
       };
     case ATTRIBUTES_LOADING:
       return {
         ...state,
-        isLoading: action.payload
+        isLoadingAttributes: action.payload
       };
     case ATTRIBUTES_FETCHED:
       const foundIndex = state.products.findIndex(
@@ -37,7 +38,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         openedProductId: action.productId,
-        isLoading: false
+        isLoadingAttributes: false
       };
     default:
       return state;
