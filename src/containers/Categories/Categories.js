@@ -18,6 +18,7 @@ class Categories extends React.Component {
   };
 
   componentDidMount() {
+    // TODO getProducts => fetchProducts
     this.props.getProducts();
   }
 
@@ -50,7 +51,6 @@ class Categories extends React.Component {
               })}
           {this.state.selectedProductId !== null && (
             <ProductDetailed
-              open={this.state.selectedProductId !== null}
               onClose={this.handleClose}
               productId={this.state.selectedProductId}
             />
