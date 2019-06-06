@@ -4,17 +4,6 @@
     <list default="true" id="7197efad-c1aa-4bc2-b5bb-846703626322" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductCart/ProductCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductCart/ProductCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductColor/ProductColor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductColor/ProductColor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductColor/ProductColor.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductColor/ProductColor.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductSize/ProductSize.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductSize/ProductSize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ProductSize/ProductSize.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ProductSize/ProductSize.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/Categories/Categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/Categories/Categories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/ProductDetailed/ProductDetailed.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ProductDetailed/ProductDetailed.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/ProductsCart/ProductsCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/ProductsCart/ProductsCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/reducers/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/products.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="135">
+              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -323,7 +312,7 @@
       <workItem from="1559285378126" duration="10024000" />
       <workItem from="1559550572494" duration="9587000" />
       <workItem from="1559739925895" duration="7974000" />
-      <workItem from="1559803945896" duration="13061000" />
+      <workItem from="1559803945896" duration="13350000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1558956153500</created>
@@ -364,7 +353,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="235573000" />
+    <option name="totallyTimeSpent" value="235862000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -377,8 +366,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="70" y="151" width="1403" height="1053" extended-state="4" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2991894" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2991894" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -393,7 +383,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.3293348" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32824427" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.32824427" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.6183206" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -809,8 +799,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="135">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
         </state>
       </provider>
     </entry>
