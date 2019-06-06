@@ -8,12 +8,12 @@ import { fetchProducts } from "../../actions";
 
 class Categories extends React.Component {
   state = {
-    selectedProductId: null
+    selectedproduct_id: null
   };
 
   handleClose = () => {
     this.setState({
-      selectedProductId: null
+      selectedproduct_id: null
     });
   };
 
@@ -22,13 +22,13 @@ class Categories extends React.Component {
   }
 
   handleClickProduct = evt => {
-    this.setState({ selectedProductId: evt.currentTarget.id });
+    this.setState({ selectedproduct_id: evt.currentTarget.id });
   };
 
   // shouldComponentUpdate(nextProps, nextState, nextContext) {
   //   return (
   //     this.props.products.length !== nextProps.products.length ||
-  //     this.state.selectedProductId !== nextState.selectedProductId
+  //     this.state.selectedproduct_id !== nextState.selectedproduct_id
   //   );
   // }
 
@@ -48,11 +48,11 @@ class Categories extends React.Component {
                   />
                 );
               })}
-          {this.state.selectedProductId !== null && (
+          {this.state.selectedproduct_id !== null && (
             <ProductDetailed
-              open={this.state.selectedProductId !== null}
+              open={this.state.selectedproduct_id !== null}
               onClose={this.handleClose}
-              productId={this.state.selectedProductId}
+              product_id={this.state.selectedproduct_id}
             />
           )}
         </div>

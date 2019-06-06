@@ -25,19 +25,19 @@ export const fetchProducts = () => dispatch => {
   );
 };
 
-export const fetchAttributes = productId => dispatch => {
+export const fetchAttributes = product_id => dispatch => {
   dispatch({
     type: ATTRIBUTES_LOADING,
     payload: true
   });
   return axios
-    .get(`https://backendapi.turing.com/attributes/inProduct/${productId}`)
+    .get(`https://backendapi.turing.com/attributes/inProduct/${product_id}`)
     .then(
       ({ data }) => {
         dispatch({
           type: ATTRIBUTES_FETCHED,
           payload: data,
-          productId: productId
+          product_id: product_id
         });
       },
       error => {
@@ -46,14 +46,11 @@ export const fetchAttributes = productId => dispatch => {
     );
 };
 
-export const addingToCart = productId => dispatch => {
+export const addingToCart = (product_id, color_id, size_id) => dispatch => {
   return dispatch({
     type: ADD_TO_CART,
-    payload: productId
+    product_id: product_id,
+    color_id: color_id,
+    size_id: size_id
   });
 };
-
-// export const getCategories = category => ({
-//   type: "GET_CATEGORIES",
-//   payload: category
-// });

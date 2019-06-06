@@ -9,3 +9,7 @@
     border-color: #f62f5e;
     cursor: pointer;
 }
+
+.Active{
+    background-color: rgba(245, 0, 87, 0.2) !important;
+}

@@ -16,12 +16,12 @@ import Button from "@material-ui/core/Button/index";
 
 class ProductDetailed extends React.Component {
   state = {
-    colorId: null,
-    sizeId: null
+    color_id: null,
+    size_id: null
   };
 
   componentDidMount() {
-    this.props.getAttributes(this.props.productId);
+    this.props.getAttributes(this.props.product_id);
   }
 
   getColors = attributes => {
@@ -42,28 +42,32 @@ class ProductDetailed extends React.Component {
   };
 
   handleAddToCart = evt => {
-    this.props.addToCart(evt.currentTarget.id);
+    this.props.addToCart(
+      evt.currentTarget.id,
+      this.state.color_id,
+      this.state.size_id
+    );
     this.setState({
-      colorId: null,
-      sizeId: null
+      color_id: null,
+      size_id: null
     });
   };
 
   handleSelectColor = evt => {
     this.setState({
-      colorId: evt.currentTarget.id
+      color_id: evt.currentTarget.id
     });
   };
 
   handleSelectSize = evt => {
     this.setState({
-      sizeId: evt.currentTarget.id
+      size_id: evt.currentTarget.id
     });
   };
 
   render() {
     const foundIndex = this.props.products.findIndex(
-      product => product.product_id == this.props.productId
+      product => product.product_id == this.props.product_id
     );
     const product = this.props.products[foundIndex];
     return (
@@ -113,6 +117,7 @@ class ProductDetailed extends React.Component {
                             id={color.attribute_value_id}
                             key={index}
                             onClick={this.handleSelectColor}
+                            active={this.state.color_id}
                           />
                         );
                       })}
@@ -130,6 +135,7 @@ class ProductDetailed extends React.Component {
                             key={index}
                             onClick={this.handleSelectSize}
                             id={size.attribute_value_id}
+                            active={this.state.size_id}
                           />
                         );
                       })}
@@ -140,7 +146,7 @@ class ProductDetailed extends React.Component {
                 color="secondary"
                 className={classes.AddToCart}
                 onClick={this.handleAddToCart}
-                id={this.props.productId}
+                id={this.props.product_id}
               >
                 Add to Cart
               </Button>
@@ -160,8 +166,9 @@ const mapStateToProps = ({ products }) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAttributes: productId => dispatch(fetchAttributes(productId)),
-    addToCart: productId => dispatch(addingToCart(productId))
+    getAttributes: product_id => dispatch(fetchAttributes(product_id)),
+    addToCart: (product_id, color_id, size_id) =>
+      dispatch(addingToCart(product_id, color_id, size_id))
   };
 };
 

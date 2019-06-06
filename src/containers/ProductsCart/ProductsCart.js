@@ -4,8 +4,7 @@ import classes from "./ProductsCart.module.css";
 import ProductCart from "../../components/ProductCart/ProductCart";
 
 class ProductsCart extends Component {
-  render() {
-    const productsInCart = this.props.cart.products;
+  getProductFromCart(productsInCart) {
     let productsForRender = [];
     for (let i = 0; i < productsInCart.length; i++) {
       productsForRender.push(
@@ -14,16 +13,21 @@ class ProductsCart extends Component {
         })
       );
     }
+    return productsForRender;
+  }
 
+  render() {
+    console.log(this.props.cart.products);
     return (
       <div className={classes.ProductsCart}>
-        {productsForRender.length === 0 ? (
+        {this.getProductFromCart(this.props.cart.products).length === 0 ? (
           <h2>Cart is empty</h2>
         ) : (
-          productsForRender.map((product, index) => {
-            console.log(product);
-            return <ProductCart product={product} key={index} />;
-          })
+          this.getProductFromCart(this.props.cart.products).map(
+            (product, index) => {
+              return <ProductCart product={product} key={index} />;
+            }
+          )
         )}
       </div>
     );

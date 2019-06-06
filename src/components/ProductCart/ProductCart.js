@@ -10,7 +10,6 @@ import ProductPrice from "../ProductPrice/ProductPrice";
 import ProductDiscountedPrice from "../ProductDiscountedPrice/ProductDiscountedPrice";
 
 const ProductCart = ({ product, onClick }) => {
-  console.log(product);
   return (
     <div
       className={classes.ProductCart}

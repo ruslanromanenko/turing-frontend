@@ -38,3 +38,7 @@
 .Purple{
     background-color: purple;
 }
+.Active{
+    border-color: orangered;
+    box-shadow: 0 0 10px rgba(0,0,0,0.9);
+}
