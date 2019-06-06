@@ -1,0 +1,26 @@
+.ProductCart{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #fff;
+}
+
+.ProductName{
+  max-width: 20%;
+}
+
+.buttonRemove{
+ height: 40px;
+}
+
+.buttonSubtract,
+.buttonAdd{
+    min-width: 40px !important;
+}
+
+.AmountProducts{
+    max-width: 50px;
+}
+.AmountProducts input{
+    text-align: center;
+}

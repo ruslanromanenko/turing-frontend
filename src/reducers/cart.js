@@ -1,19 +1,22 @@
 const initialState = {
-  cart: [
-    {
-      productId: 1,
-      amount: 2
-    }
-  ]
+  products: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      return {
-        ...state,
-        cart: {}
-      };
+      const foundIndex = state.products.findIndex(
+        product => product.product_id === action.payload
+      );
+      if (foundIndex === -1) {
+        state.products.push({
+          product_id: action.payload,
+          amount: 1
+        });
+      } else {
+        ++state.products[foundIndex].amount;
+      }
+      return state;
     default:
       return state;
   }
