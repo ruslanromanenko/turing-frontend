@@ -12,6 +12,7 @@ export const fetchProducts = () => dispatch => {
     type: PRODUCTS_LOADING,
     payload: true
   });
+  // TODO make it more common, means need to move api url to constants and use in separte places
   return axios.get("https://backendapi.turing.com/products/").then(
     ({ data }) => {
       dispatch({

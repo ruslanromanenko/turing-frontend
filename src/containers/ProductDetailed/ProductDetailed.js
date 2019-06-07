@@ -14,18 +14,22 @@ import ProductSize from "../../components/ProductSize/ProductSize";
 import { fetchAttributes, addingToCart } from "../../actions";
 import Button from "@material-ui/core/Button/index";
 
+// TODO maybe it would be better call that classname ProductDetailsModal
 class ProductDetailed extends React.Component {
   state = {
-    color_id: null,
-    size_id: null
+    colorId: null,
+    sizeId: null
   };
 
   componentDidMount() {
-    this.props.getAttributes(this.props.product_id);
+    // TODO it would be better to call getAttributes as fetchAttributes as we are fetching them from server
+    this.props.getAttributes(this.props.productId);
   }
 
   getColors = attributes => {
     if (attributes) {
+      // TODO you can avoid using secong return here
+      // return attributes.filter(attribute => attribute.attribute_name === "Color");
       return attributes.filter(attribute => {
         return attribute.attribute_name === "Color";
       });
@@ -34,6 +38,7 @@ class ProductDetailed extends React.Component {
   };
   getSizes = attributes => {
     if (attributes) {
+      // TODO here you can also remove secong return
       return attributes.filter(attribute => {
         return attribute.attribute_name === "Size";
       });
@@ -42,36 +47,33 @@ class ProductDetailed extends React.Component {
   };
 
   handleAddToCart = evt => {
-    this.props.addToCart(
-      evt.currentTarget.id,
-      this.state.color_id,
-      this.state.size_id
-    );
+    this.props.addToCart(evt.currentTarget.id);
     this.setState({
-      color_id: null,
-      size_id: null
+      colorId: null,
+      sizeId: null
     });
   };
 
   handleSelectColor = evt => {
     this.setState({
-      color_id: evt.currentTarget.id
+      colorId: evt.currentTarget.id
     });
   };
 
   handleSelectSize = evt => {
     this.setState({
-      size_id: evt.currentTarget.id
+      sizeId: evt.currentTarget.id
     });
   };
 
   render() {
+    // TODO I would call it productIndex
     const foundIndex = this.props.products.findIndex(
-      product => product.product_id == this.props.product_id
+      product => product.product_id == this.props.productId
     );
     const product = this.props.products[foundIndex];
     return (
-      <Dialog open={this.props.open} onClose={this.props.onClose}>
+      <Dialog open onClose={this.props.onClose}>
         <div className={classes.ProductDetailed}>
           <DialogTitle
             id="customized-dialog-title"
