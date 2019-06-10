@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./ProductDetailed.module.css";
+import classes from "./ProductDetailsModal.module.css";
 import DialogTitle from "@material-ui/core/DialogTitle/index";
 import DialogContent from "@material-ui/core/DialogContent/index";
 import Dialog from "@material-ui/core/Dialog/index";
@@ -15,7 +15,7 @@ import { fetchAttributes, addingToCart } from "../../actions";
 import Button from "@material-ui/core/Button/index";
 
 // TODO maybe it would be better call that classname ProductDetailsModal
-class ProductDetailed extends React.Component {
+class ProductDetailsModal extends React.Component {
   state = {
     colorId: null,
     sizeId: null
@@ -47,7 +47,11 @@ class ProductDetailed extends React.Component {
   };
 
   handleAddToCart = evt => {
-    this.props.addToCart(evt.currentTarget.id);
+    this.props.addToCart(
+      evt.currentTarget.id,
+      this.state.colorId,
+      this.state.sizeId
+    );
     this.setState({
       colorId: null,
       sizeId: null
@@ -74,7 +78,7 @@ class ProductDetailed extends React.Component {
     const product = this.props.products[foundIndex];
     return (
       <Dialog open onClose={this.props.onClose}>
-        <div className={classes.ProductDetailed}>
+        <div className={classes.ProductDetailsModal}>
           <DialogTitle
             id="customized-dialog-title"
             onClose={this.props.onClose}
@@ -119,7 +123,7 @@ class ProductDetailed extends React.Component {
                             id={color.attribute_value_id}
                             key={index}
                             onClick={this.handleSelectColor}
-                            active={this.state.color_id}
+                            active={this.state.colorId}
                           />
                         );
                       })}
@@ -137,7 +141,7 @@ class ProductDetailed extends React.Component {
                             key={index}
                             onClick={this.handleSelectSize}
                             id={size.attribute_value_id}
-                            active={this.state.size_id}
+                            active={this.state.sizeId}
                           />
                         );
                       })}
@@ -148,7 +152,7 @@ class ProductDetailed extends React.Component {
                 color="secondary"
                 className={classes.AddToCart}
                 onClick={this.handleAddToCart}
-                id={this.props.product_id}
+                id={this.props.productId}
               >
                 Add to Cart
               </Button>
@@ -168,13 +172,13 @@ const mapStateToProps = ({ products }) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAttributes: product_id => dispatch(fetchAttributes(product_id)),
-    addToCart: (product_id, color_id, size_id) =>
-      dispatch(addingToCart(product_id, color_id, size_id))
+    getAttributes: productId => dispatch(fetchAttributes(productId)),
+    addToCart: (productId, colorId, sizeId) =>
+      dispatch(addingToCart(productId, colorId, sizeId))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProductDetailed);
+)(ProductDetailsModal);
