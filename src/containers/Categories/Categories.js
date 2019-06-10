@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Categories.module.css";
 import { connect } from "react-redux";
-import ProductDetailed from "../ProductDetailed/ProductDetailed";
+import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
 import Filters from "../../components/Filters/Filters";
 import Product from "../../components/Product/Products";
 import { fetchProducts } from "../../actions";
@@ -18,8 +18,7 @@ class Categories extends React.Component {
   };
 
   componentDidMount() {
-    // TODO getProducts => fetchProducts
-    this.props.getProducts();
+    this.props.fetchProducts();
   }
 
   handleClickProduct = evt => {
@@ -50,7 +49,7 @@ class Categories extends React.Component {
                 );
               })}
           {this.state.selectedProductId !== null && (
-            <ProductDetailed
+            <ProductDetailsModal
               onClose={this.handleClose}
               productId={this.state.selectedProductId}
             />
@@ -70,7 +69,7 @@ const mapStateToProps = ({ products }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProducts: () => dispatch(fetchProducts())
+    fetchProducts: () => dispatch(fetchProducts())
   };
 };
 

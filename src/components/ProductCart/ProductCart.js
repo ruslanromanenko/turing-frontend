@@ -9,12 +9,12 @@ import TextField from "@material-ui/core/TextField";
 import ProductPrice from "../ProductPrice/ProductPrice";
 import ProductDiscountedPrice from "../ProductDiscountedPrice/ProductDiscountedPrice";
 
-const ProductCart = ({ product, onClick }) => {
+const ProductCart = ({ product, onClick, attributes, amount }) => {
   return (
     <div
       className={classes.ProductCart}
       onClick={onClick}
-      id={product.product_id}
+      id={product.productId}
     >
       <Button
         variant="contained"
@@ -26,7 +26,9 @@ const ProductCart = ({ product, onClick }) => {
         Delete
       </Button>
       <p className={classes.ProductName}>{product.name}</p>
-      <p>Attributes</p>
+      <p>
+        Color: {attributes.color}, Size: {attributes.size}
+      </p>
       <p>{product.price}</p>
       <div>
         <Button
@@ -39,7 +41,7 @@ const ProductCart = ({ product, onClick }) => {
         </Button>
         <TextField
           id="filled-number"
-          // value={values.age}
+          value={amount}
           // onChange={handleChange("age")}
           type="number"
           className={classes.AmountProducts}

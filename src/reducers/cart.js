@@ -5,21 +5,21 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      const foundIndex = state.products.findIndex(
+      const indexProduct = state.products.findIndex(
         product =>
-          product.product_id === action.product_id &&
-          product.color_id === action.color_id &&
-          product.size_id === action.size_id
+          product.productId === action.productId &&
+          product.colorId === action.colorId &&
+          product.sizeId === action.sizeId
       );
-      if (foundIndex === -1) {
+      if (indexProduct === -1) {
         state.products.push({
-          product_id: action.product_id,
-          color_id: action.color_id,
-          size_id: action.size_id,
+          productId: action.productId,
+          colorId: action.colorId,
+          sizeId: action.sizeId,
           amount: 1
         });
       } else {
-        ++state.products[foundIndex].amount;
+        ++state.products[indexProduct].amount;
       }
       return state;
     default:

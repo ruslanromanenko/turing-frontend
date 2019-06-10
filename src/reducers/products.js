@@ -9,7 +9,7 @@ const initialState = {
   isLoadingProducts: false,
   isLoadingAttributes: false,
   products: [],
-  openedproduct_id: null
+  openedproductId: null
 };
 
 export default (state = initialState, action) => {
@@ -32,12 +32,12 @@ export default (state = initialState, action) => {
       };
     case ATTRIBUTES_FETCHED:
       const foundIndex = state.products.findIndex(
-        product => product.product_id == action.product_id
+        product => product.product_id == action.productId
       );
       state.products[foundIndex].attributes = action.payload;
       return {
         ...state,
-        openedproduct_id: action.product_id,
+        openedproductId: action.productId,
         isLoadingAttributes: false
       };
     default:

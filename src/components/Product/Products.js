@@ -2,13 +2,14 @@ import React from "react";
 import classes from "./Product.module.css";
 import ProductPrice from "../ProductPrice/ProductPrice";
 import ProductDiscountedPrice from "../ProductDiscountedPrice/ProductDiscountedPrice";
+import constants from "../../constants";
 
 const Product = ({ product, onClick }) => {
   let descriptionSliced = product.description.slice(0, 75);
   return (
     <div className={classes.Product} onClick={onClick} id={product.product_id}>
       <img
-        src={`https://backendapi.turing.com/images/products/${
+        src={`${constants.ServerUrl.baseURL}images/products/${
           product.thumbnail
         }`}
         alt={product.name}

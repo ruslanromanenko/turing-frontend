@@ -13,8 +13,8 @@ import ProductColor from "../../components/ProductColor/ProductColor";
 import ProductSize from "../../components/ProductSize/ProductSize";
 import { fetchAttributes, addingToCart } from "../../actions";
 import Button from "@material-ui/core/Button/index";
+import constants from "../../constants";
 
-// TODO maybe it would be better call that classname ProductDetailsModal
 class ProductDetailsModal extends React.Component {
   state = {
     colorId: null,
@@ -22,26 +22,22 @@ class ProductDetailsModal extends React.Component {
   };
 
   componentDidMount() {
-    // TODO it would be better to call getAttributes as fetchAttributes as we are fetching them from server
-    this.props.getAttributes(this.props.productId);
+    this.props.fetchAttributes(this.props.productId);
   }
 
   getColors = attributes => {
     if (attributes) {
-      // TODO you can avoid using secong return here
-      // return attributes.filter(attribute => attribute.attribute_name === "Color");
-      return attributes.filter(attribute => {
-        return attribute.attribute_name === "Color";
-      });
+      return attributes.filter(
+        attribute => attribute.attribute_name === "Color"
+      );
     }
     return [];
   };
   getSizes = attributes => {
     if (attributes) {
-      // TODO here you can also remove secong return
-      return attributes.filter(attribute => {
-        return attribute.attribute_name === "Size";
-      });
+      return attributes.filter(
+        attribute => attribute.attribute_name === "Size"
+      );
     }
     return [];
   };
@@ -69,13 +65,11 @@ class ProductDetailsModal extends React.Component {
       sizeId: evt.currentTarget.id
     });
   };
-
   render() {
-    // TODO I would call it productIndex
-    const foundIndex = this.props.products.findIndex(
+    const productIndex = this.props.products.findIndex(
       product => product.product_id == this.props.productId
     );
-    const product = this.props.products[foundIndex];
+    const product = this.props.products[productIndex];
     return (
       <Dialog open onClose={this.props.onClose}>
         <div className={classes.ProductDetailsModal}>
@@ -95,7 +89,7 @@ class ProductDetailsModal extends React.Component {
           <DialogContent className={classes.DialogContent}>
             <div className={classes.imageBlock}>
               <img
-                src={`https://backendapi.turing.com/images/products/${
+                src={`${constants.ServerUrl.baseURL}images/products/${
                   product.thumbnail
                 }`}
                 alt={product.name}
@@ -153,6 +147,7 @@ class ProductDetailsModal extends React.Component {
                 className={classes.AddToCart}
                 onClick={this.handleAddToCart}
                 id={this.props.productId}
+                disabled={!this.state.sizeId || !this.state.colorId}
               >
                 Add to Cart
               </Button>
@@ -172,7 +167,7 @@ const mapStateToProps = ({ products }) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAttributes: productId => dispatch(fetchAttributes(productId)),
+    fetchAttributes: productId => dispatch(fetchAttributes(productId)),
     addToCart: (productId, colorId, sizeId) =>
       dispatch(addingToCart(productId, colorId, sizeId))
   };
