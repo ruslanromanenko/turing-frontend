@@ -35,6 +35,7 @@ export default (state = initialState, action) => {
         product => product.product_id == action.productId
       );
       state.products[foundIndex].attributes = action.payload;
+
       return {
         ...state,
         openedproductId: action.productId,

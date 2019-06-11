@@ -46,7 +46,8 @@ class ProductDetailsModal extends React.Component {
     this.props.addToCart(
       evt.currentTarget.id,
       this.state.colorId,
-      this.state.sizeId
+      this.state.sizeId,
+      this.getProduct()
     );
     this.setState({
       colorId: null,
@@ -65,11 +66,14 @@ class ProductDetailsModal extends React.Component {
       sizeId: evt.currentTarget.id
     });
   };
-  render() {
+  getProduct() {
     const productIndex = this.props.products.findIndex(
       product => product.product_id == this.props.productId
     );
-    const product = this.props.products[productIndex];
+    return this.props.products[productIndex];
+  }
+  render() {
+    const product = this.getProduct();
     return (
       <Dialog open onClose={this.props.onClose}>
         <div className={classes.ProductDetailsModal}>
@@ -168,8 +172,8 @@ const mapStateToProps = ({ products }) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchAttributes: productId => dispatch(fetchAttributes(productId)),
-    addToCart: (productId, colorId, sizeId) =>
-      dispatch(addingToCart(productId, colorId, sizeId))
+    addToCart: (productId, colorId, sizeId, product) =>
+      dispatch(addingToCart(productId, colorId, sizeId, product))
   };
 };
 
