@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import classes from "./ProductsCart.module.css";
 import ProductCart from "../../components/ProductCart/ProductCart";
-import { removingFromCart } from "../../actions";
+import {
+  addingProduct,
+  changeAmountProduct,
+  removingFromCart,
+  subtractingProduct
+} from "../../actions";
 
 class ProductsCart extends Component {
   getAttribute(attributes, attributeId) {
@@ -23,15 +28,22 @@ class ProductsCart extends Component {
     return product.amount;
   }
 
-  clickHandleAdd(evt) {
-    console.log(evt.currentTarget.id);
-  }
-  clickHandleSubtract(evt) {
-    console.log(evt.currentTarget.id);
-  }
+  clickHandleAdd = evt => {
+    this.props.addProduct(evt.currentTarget.id);
+  };
+
+  clickHandleSubtract = evt => {
+    this.props.subtractProduct(evt.currentTarget.id);
+  };
 
   clickHandleRemove = evt => {
     this.props.removeFromCart(evt.currentTarget.parentElement.id);
+  };
+
+  changeHandleAmount = key => evt => {
+    if (evt.currentTarget.value > 0) {
+      this.props.changeAmountProduct(key, evt.currentTarget.value);
+    }
   };
 
   render() {
@@ -42,7 +54,6 @@ class ProductsCart extends Component {
         ) : (
           this.props.cart.map((productInCart, index) => {
             const product = productInCart.product;
-            console.log(productInCart);
             return (
               <ProductCart
                 product={product}
@@ -64,6 +75,7 @@ class ProductsCart extends Component {
                 onAdd={this.clickHandleAdd}
                 onSubtract={this.clickHandleSubtract}
                 onRemove={this.clickHandleRemove}
+                onChange={this.changeHandleAmount}
               />
             );
           })
@@ -82,7 +94,10 @@ const mapStateToProps = ({ cart, products }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeFromCart: uniqueKey => dispatch(removingFromCart(uniqueKey))
+    removeFromCart: uniqueKey => dispatch(removingFromCart(uniqueKey)),
+    addProduct: id => dispatch(addingProduct(id)),
+    subtractProduct: id => dispatch(subtractingProduct(id)),
+    changeAmountProduct: (id, value) => dispatch(changeAmountProduct(id, value))
   };
 };
 export default connect(

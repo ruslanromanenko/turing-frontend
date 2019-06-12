@@ -6,7 +6,10 @@ import {
   ATTRIBUTES_LOADING,
   ATTRIBUTES_FETCHED,
   ADD_TO_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
+  SUBTRACT_PRODUCT,
+  ADD_PRODUCT,
+  CHANGE_AMOUNT
 } from "../actions/types";
 
 const baseUrl = constants.ServerUrl.baseURL;
@@ -66,5 +69,24 @@ export const removingFromCart = uniqueKey => dispatch => {
   return dispatch({
     type: REMOVE_FROM_CART,
     uniqueKey
+  });
+};
+export const addingProduct = id => dispatch => {
+  return dispatch({
+    type: ADD_PRODUCT,
+    id
+  });
+};
+export const subtractingProduct = id => dispatch => {
+  return dispatch({
+    type: SUBTRACT_PRODUCT,
+    id
+  });
+};
+export const changeAmountProduct = (id, value) => dispatch => {
+  return dispatch({
+    type: CHANGE_AMOUNT,
+    id,
+    value
   });
 };

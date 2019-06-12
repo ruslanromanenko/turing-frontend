@@ -17,14 +17,13 @@ const ProductCart = ({
   uniqueKey,
   onRemove,
   onAdd,
-  onSubtract
+  onSubtract,
+  onChange
 }) => {
   const price =
     product.discounted_price === "0.00"
       ? product.price
       : product.discounted_price;
-
-  console.log(product);
   return (
     <div className={classes.ProductCart} id={uniqueKey}>
       <Button
@@ -49,13 +48,14 @@ const ProductCart = ({
           size="small"
           color="secondary"
           onClick={onSubtract}
+          id={`sub_${uniqueKey}`}
         >
           <RemoveIcon />
         </Button>
         <TextField
-          id="filled-number"
+          id={`change_${uniqueKey}`}
           value={amount}
-          // onChange={handleChange("age")}
+          onChange={onChange(uniqueKey)}
           type="number"
           className={classes.AmountProducts}
         />
@@ -65,11 +65,12 @@ const ProductCart = ({
           size="small"
           className={classes.buttonAdd}
           color="secondary"
+          id={`add_${uniqueKey}`}
         >
           <AddIcon />
         </Button>
       </div>
-      <p>{amount * price}</p>
+      <p>{Math.round(amount * price)}</p>
     </div>
   );
 };

@@ -31,13 +31,18 @@ export default (state = initialState, action) => {
         isLoadingAttributes: action.payload
       };
     case ATTRIBUTES_FETCHED:
-      const foundIndex = state.products.findIndex(
-        product => product.product_id == action.productId
-      );
-      state.products[foundIndex].attributes = action.payload;
-
+      const products = state.products.map(product => {
+        if (product.product_id == action.productId) {
+          return {
+            ...product,
+            attributes: action.payload
+          };
+        }
+        return product;
+      });
       return {
         ...state,
+        products,
         openedproductId: action.productId,
         isLoadingAttributes: false
       };
