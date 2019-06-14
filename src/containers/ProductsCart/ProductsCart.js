@@ -28,6 +28,17 @@ class ProductsCart extends Component {
     return product.amount;
   }
 
+  getTotalPrice(products) {
+    return products.reduce((acc, productInCart) => {
+      const price =
+        productInCart.product.discounted_price === "0.00"
+          ? productInCart.product.price
+          : productInCart.product.discounted_price;
+      acc += productInCart.amount * price;
+      return acc;
+    }, 0);
+  }
+
   clickHandleAdd = evt => {
     this.props.addProduct(evt.currentTarget.id);
   };
@@ -36,8 +47,8 @@ class ProductsCart extends Component {
     this.props.subtractProduct(evt.currentTarget.id);
   };
 
-  clickHandleRemove = evt => {
-    this.props.removeFromCart(evt.currentTarget.parentElement.id);
+  clickHandleRemove = key => evt => {
+    this.props.removeFromCart(key);
   };
 
   changeHandleAmount = key => evt => {
@@ -52,33 +63,54 @@ class ProductsCart extends Component {
         {this.props.cart.length === 0 ? (
           <h2>Cart is empty</h2>
         ) : (
-          this.props.cart.map((productInCart, index) => {
-            const product = productInCart.product;
-            return (
-              <ProductCart
-                product={product}
-                color={this.getAttribute(
-                  product.attributes,
-                  productInCart.colorId
-                )}
-                size={this.getAttribute(
-                  product.attributes,
-                  productInCart.sizeId
-                )}
-                key={index + productInCart.key}
-                amount={this.getAmount(
-                  product.product_id,
-                  productInCart.colorId,
-                  productInCart.sizeId
-                )}
-                uniqueKey={productInCart.key}
-                onAdd={this.clickHandleAdd}
-                onSubtract={this.clickHandleSubtract}
-                onRemove={this.clickHandleRemove}
-                onChange={this.changeHandleAmount}
-              />
-            );
-          })
+          <React.Fragment>
+            <div className={classes.ProductsCartHead}>
+              <p className={classes.TotalPrice}>
+                Total: {this.getTotalPrice(this.props.cart).toFixed(2)}
+              </p>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <td />
+                  <td>Name</td>
+                  <td>Attributes</td>
+                  <td>Price</td>
+                  <td>Quantity</td>
+                  <td>Subtotal</td>
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.cart.map((productInCart, index) => {
+                  const product = productInCart.product;
+                  return (
+                    <ProductCart
+                      product={product}
+                      color={this.getAttribute(
+                        product.attributes,
+                        productInCart.colorId
+                      )}
+                      size={this.getAttribute(
+                        product.attributes,
+                        productInCart.sizeId
+                      )}
+                      key={index + productInCart.key}
+                      amount={this.getAmount(
+                        product.product_id,
+                        productInCart.colorId,
+                        productInCart.sizeId
+                      )}
+                      uniqueKey={productInCart.key}
+                      onAdd={this.clickHandleAdd}
+                      onSubtract={this.clickHandleSubtract}
+                      onRemove={this.clickHandleRemove}
+                      onChange={this.changeHandleAmount}
+                    />
+                  );
+                })}
+              </tbody>
+            </table>
+          </React.Fragment>
         )}
       </div>
     );

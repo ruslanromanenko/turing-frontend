@@ -1,0 +1,11 @@
+.buttonSubtract,
+.buttonAdd{
+    min-width: 40px !important;
+}
+
+.AmountProducts{
+    max-width: 50px;
+}
+.AmountProducts input{
+    text-align: center;
+}

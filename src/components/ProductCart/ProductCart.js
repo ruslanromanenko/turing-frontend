@@ -2,13 +2,7 @@ import React from "react";
 import classes from "./ProductCart.module.css";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import TextField from "@material-ui/core/TextField";
-
-import ProductPrice from "../ProductPrice/ProductPrice";
-import ProductDiscountedPrice from "../ProductDiscountedPrice/ProductDiscountedPrice";
-
+import AmountProduct from "../AmountProduct/AmountProduct";
 const ProductCart = ({
   product,
   amount,
@@ -25,53 +19,43 @@ const ProductCart = ({
       ? product.price
       : product.discounted_price;
   return (
-    <div className={classes.ProductCart} id={uniqueKey}>
-      <Button
-        variant="contained"
-        size="small"
-        color="secondary"
-        className={classes.buttonRemove}
-        onClick={onRemove}
-      >
-        <DeleteIcon className={classes.leftIcon} />
-        Delete
-      </Button>
-      <p className={classes.ProductName}>{product.name}</p>
-      <p>
-        Color: {color}, Size: {size}
-      </p>
-      <p>{price}</p>
-      <div>
+    <tr className={classes.ProductCart} id={uniqueKey}>
+      <td>
         <Button
-          className={classes.buttonSubtract}
           variant="contained"
           size="small"
           color="secondary"
-          onClick={onSubtract}
-          id={`sub_${uniqueKey}`}
+          className={classes.buttonRemove}
+          onClick={onRemove(uniqueKey)}
         >
-          <RemoveIcon />
+          <DeleteIcon className={classes.leftIcon} />
+          Delete
         </Button>
-        <TextField
-          id={`change_${uniqueKey}`}
-          value={amount}
-          onChange={onChange(uniqueKey)}
-          type="number"
-          className={classes.AmountProducts}
+      </td>
+      <td>
+        <p className={classes.ProductName}>{product.name}</p>
+      </td>
+      <td>
+        <p>
+          Color: {color}, Size: {size}
+        </p>
+      </td>
+      <td>
+        <p>{price}</p>
+      </td>
+      <td>
+        <AmountProduct
+          onAdd={onAdd}
+          onSubtract={onSubtract}
+          onChange={onChange}
+          amount={amount}
+          uniqueKey={uniqueKey}
         />
-        <Button
-          onClick={onAdd}
-          variant="contained"
-          size="small"
-          className={classes.buttonAdd}
-          color="secondary"
-          id={`add_${uniqueKey}`}
-        >
-          <AddIcon />
-        </Button>
-      </div>
-      <p>{Math.round(amount * price)}</p>
-    </div>
+      </td>
+      <td>
+        <p>{(amount * price).toFixed(2)}</p>
+      </td>
+    </tr>
   );
 };
 export default ProductCart;

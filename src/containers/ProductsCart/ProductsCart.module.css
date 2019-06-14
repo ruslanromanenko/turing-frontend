@@ -1,3 +1,21 @@
 .ProductsCart{
+    display: flex;
+    flex-direction: column;
+}
 
+table, thead, tbody{
+    width: 100%;
+}
+
+thead td{
+    height: 40px;
+    font-weight: bold;
+}
+
+.TotalPrice{
+ color: #f50057;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-align: center;
 }

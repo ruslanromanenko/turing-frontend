@@ -1,26 +1,23 @@
 .ProductCart{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #fff;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: space-around;*/
+    background-color: rgba(255, 255, 255, 1);;
+}
+
+.ProductCart:hover{
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
 .ProductName{
-  max-width: 20%;
 }
 
 .buttonRemove{
  height: 40px;
 }
 
-.buttonSubtract,
-.buttonAdd{
-    min-width: 40px !important;
+td{
+    text-align: center;
+    vertical-align: middle;
 }
 
-.AmountProducts{
-    max-width: 50px;
-}
-.AmountProducts input{
-    text-align: center;
-}
