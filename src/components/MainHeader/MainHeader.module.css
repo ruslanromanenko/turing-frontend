@@ -20,3 +20,30 @@
 .MainMenu {
     flex-basis: 30%;
 }
+
+.CartHeader{
+    position: relative;
+}
+
+.AmountProduct{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f62f5e;
+    color: white;
+    position: absolute;
+    z-index: 99;
+    font-size: 16px;
+    top: -18px;
+    left: 12px;
+text-align: center;
+}
+
+.PriceProduct{
+    margin-left: 8px;
+}
+
+.Price{
+    color: #f62f5e;
+    font-weight: bold;
+}

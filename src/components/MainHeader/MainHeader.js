@@ -1,8 +1,9 @@
 import React from "react";
 import classes from "./MainHeader.module.css";
 import { NavLink } from "react-router-dom";
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
-const MainHeader = props => {
+const MainHeader = ({ totalPrice, totalAmount }) => {
   return (
     <div className={classes.MainHeader}>
       <span>Hi! Sign in or Register</span>
@@ -27,7 +28,13 @@ const MainHeader = props => {
       </nav>
       <span className={classes.Currency}>GBP</span>
       <div className={classes.Cart}>
-        <span>Your bag: 3.99</span>
+        <span className={classes.CartHeader}>
+          <ShoppingCart />
+          <span className={classes.AmountProduct}>{totalAmount}</span>
+          <span className={classes.PriceProduct}>
+            Your bag: <span className={classes.Price}>{totalPrice}</span>
+          </span>
+        </span>
       </div>
     </div>
   );

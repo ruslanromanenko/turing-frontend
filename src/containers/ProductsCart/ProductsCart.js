@@ -8,6 +8,7 @@ import {
   removingFromCart,
   subtractingProduct
 } from "../../actions";
+import constants from "../../constants";
 
 class ProductsCart extends Component {
   getAttribute(attributes, attributeId) {
@@ -26,17 +27,6 @@ class ProductsCart extends Component {
       );
     });
     return product.amount;
-  }
-
-  getTotalPrice(products) {
-    return products.reduce((acc, productInCart) => {
-      const price =
-        productInCart.product.discounted_price === "0.00"
-          ? productInCart.product.price
-          : productInCart.product.discounted_price;
-      acc += productInCart.amount * price;
-      return acc;
-    }, 0);
   }
 
   clickHandleAdd = evt => {
@@ -66,7 +56,7 @@ class ProductsCart extends Component {
           <React.Fragment>
             <div className={classes.ProductsCartHead}>
               <p className={classes.TotalPrice}>
-                Total: {this.getTotalPrice(this.props.cart).toFixed(2)}
+                Total: {constants.getTotalPrice(this.props.cart).toFixed(2)}
               </p>
             </div>
             <table>
