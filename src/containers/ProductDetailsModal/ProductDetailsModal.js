@@ -8,17 +8,18 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography/index";
 import { connect } from "react-redux";
 import ProductPrice from "../../components/ProductPrice/ProductPrice";
-import ProductDiscountedPrice from "../../components/ProductDiscountedPrice/ProductDiscountedPrice";
 import ProductColor from "../../components/ProductColor/ProductColor";
 import ProductSize from "../../components/ProductSize/ProductSize";
 import { fetchAttributes, addingToCart } from "../../actions";
 import Button from "@material-ui/core/Button/index";
 import constants from "../../constants";
+import { Link } from "react-router-dom";
 
 class ProductDetailsModal extends React.Component {
   state = {
     colorId: null,
-    sizeId: null
+    sizeId: null,
+    isAdded: false
   };
 
   componentDidMount() {
@@ -51,7 +52,8 @@ class ProductDetailsModal extends React.Component {
     );
     this.setState({
       colorId: null,
-      sizeId: null
+      sizeId: null,
+      isAdded: true
     });
   };
 
@@ -66,13 +68,29 @@ class ProductDetailsModal extends React.Component {
       sizeId: evt.currentTarget.id
     });
   };
+  handleСontinueShopping = () => {
+    this.props.onClose();
+    this.setState({
+      isAdded: true
+    });
+  };
+  handleGoToCart = () => {
+    this.props.onClose();
+    this.setState({
+      isAdded: true
+    });
+  };
   getProduct() {
     const productIndex = this.props.products.findIndex(
       product => product.product_id == this.props.productId
     );
     return this.props.products[productIndex];
   }
+
   render() {
+    const AdapterLink = React.forwardRef((props, ref) => (
+      <Link innerRef={ref} to="/getting-started/installation/" {...props} />
+    ));
     const product = this.getProduct();
     return (
       <Dialog open onClose={this.props.onClose}>
@@ -101,11 +119,17 @@ class ProductDetailsModal extends React.Component {
             </div>
             <div className={classes.contentBlock}>
               {product.discounted_price === "0.00" ? (
-                <ProductDiscountedPrice price={product.price} />
+                <ProductPrice price={product.price} classPrice="ProductPrice" />
               ) : (
                 <div className={classes.Prices}>
-                  <ProductPrice price={product.price} />
-                  <ProductDiscountedPrice price={product.discounted_price} />
+                  <ProductPrice
+                    price={product.price}
+                    classPrice="OldProductPrice"
+                  />
+                  <ProductPrice
+                    price={product.discounted_price}
+                    classPrice="ProductPrice"
+                  />
                 </div>
               )}
               <Typography>{product.description}</Typography>
@@ -145,16 +169,41 @@ class ProductDetailsModal extends React.Component {
                       })}
                 </div>
               </div>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.AddToCart}
-                onClick={this.handleAddToCart}
-                id={this.props.productId}
-                disabled={!this.state.sizeId || !this.state.colorId}
-              >
-                Add to Cart
-              </Button>
+              {this.state.isAdded ? (
+                <div className={classes.Controls}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.GoToCart}
+                    onClick={this.handleGoToCart}
+                    id={`go_to_cart_${this.props.productId}`}
+                    to="/cart"
+                    component={AdapterLink}
+                  >
+                    Go to Cart
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.СontinueShopping}
+                    onClick={this.handleСontinueShopping}
+                    id={`continue_${this.props.productId}`}
+                  >
+                    Сontinue
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.AddToCart}
+                  onClick={this.handleAddToCart}
+                  id={this.props.productId}
+                  disabled={!this.state.sizeId || !this.state.colorId}
+                >
+                  Add to Cart
+                </Button>
+              )}
             </div>
           </DialogContent>
         </div>

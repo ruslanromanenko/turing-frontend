@@ -3,6 +3,7 @@ import classes from "./ProductCart.module.css";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AmountProduct from "../AmountProduct/AmountProduct";
+import ProductPrice from "../ProductPrice/ProductPrice";
 const ProductCart = ({
   product,
   amount,
@@ -40,9 +41,7 @@ const ProductCart = ({
           Color: {color}, Size: {size}
         </p>
       </td>
-      <td>
-        <p>{price}</p>
-      </td>
+      <td>{<ProductPrice price={price} />}</td>
       <td>
         <AmountProduct
           onAdd={onAdd}
@@ -53,7 +52,7 @@ const ProductCart = ({
         />
       </td>
       <td>
-        <p>{(amount * price).toFixed(2)}</p>
+        <p>{<ProductPrice price={(amount * price).toFixed(2)} />}</p>
       </td>
     </tr>
   );

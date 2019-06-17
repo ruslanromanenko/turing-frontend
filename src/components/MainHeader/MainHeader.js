@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./MainHeader.module.css";
 import { NavLink } from "react-router-dom";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import ProductPrice from "../ProductPrice/ProductPrice";
 
 const MainHeader = ({ totalPrice, totalAmount }) => {
   return (
@@ -19,23 +20,23 @@ const MainHeader = ({ totalPrice, totalAmount }) => {
               Categories
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/cart" exact>
-              Cart
-            </NavLink>
-          </li>
         </ul>
       </nav>
       <span className={classes.Currency}>GBP</span>
-      <div className={classes.Cart}>
+      <NavLink to="/cart" className={classes.Cart}>
         <span className={classes.CartHeader}>
           <ShoppingCart />
-          <span className={classes.AmountProduct}>{totalAmount}</span>
+          {totalAmount !== 0 && (
+            <span className={classes.AmountProduct}>{totalAmount}</span>
+          )}
           <span className={classes.PriceProduct}>
-            Your bag: <span className={classes.Price}>{totalPrice}</span>
+            Your bag: &nbsp;
+            <span className={classes.Price}>
+              <ProductPrice price={totalPrice} />
+            </span>
           </span>
         </span>
-      </div>
+      </NavLink>
     </div>
   );
 };

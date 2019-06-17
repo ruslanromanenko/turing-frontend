@@ -72,7 +72,7 @@ export default (state = initialState, action) => {
         if (action.id == product.key) {
           return {
             ...product,
-            amount: action.value
+            amount: parseInt(action.value)
           };
         }
         return product;

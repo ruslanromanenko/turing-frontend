@@ -1,10 +1,10 @@
-import React from 'react';
-import classes from './ProductPrice.module.css';
+import React from "react";
+import classes from "./ProductPrice.module.css";
 
-const ProductPrice = ({price}) => {
-    return (
-        <span className={classes.Price}>
-            &pound;	{price}
-        </span>
-    )};
-export default ProductPrice
+const ProductPrice = ({ price, classPrice }) => (
+  <span className={classPrice ? classes[classPrice] : "Price"}>
+    &pound;{price}
+  </span>
+);
+
+export default ProductPrice;

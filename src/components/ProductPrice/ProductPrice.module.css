@@ -1,4 +1,14 @@
 .Price{
+
+}
+
+.OldProductPrice{
     color: #f62f5e;
     text-decoration: line-through;
+}
+
+.ProductPrice{
+    color: #f62f5e;
+    font-size: 1.5em;
+    font-weight: bold;
 }

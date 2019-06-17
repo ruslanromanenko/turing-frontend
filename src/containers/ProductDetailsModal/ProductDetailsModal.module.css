@@ -27,9 +27,14 @@
     display: flex;
 }
 
-.AddToCart{
+.AddToCart, .GoToCart, .СontinueShopping{
     max-width: 40%;
     margin-top: 20px !important;
     align-self: flex-end;
     border-radius: 20px !important;
+}
+
+.Controls{
+    display: flex;
+    justify-content: space-around;
 }

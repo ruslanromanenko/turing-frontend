@@ -9,6 +9,7 @@ import {
   subtractingProduct
 } from "../../actions";
 import constants from "../../constants";
+import ProductPrice from "../../components/ProductPrice/ProductPrice";
 
 class ProductsCart extends Component {
   getAttribute(attributes, attributeId) {
@@ -48,6 +49,8 @@ class ProductsCart extends Component {
   };
 
   render() {
+    const totalPrice = constants.getTotalPrice(this.props.cart).toFixed(2);
+
     return (
       <div className={classes.ProductsCart}>
         {this.props.cart.length === 0 ? (
@@ -56,7 +59,7 @@ class ProductsCart extends Component {
           <React.Fragment>
             <div className={classes.ProductsCartHead}>
               <p className={classes.TotalPrice}>
-                Total: {constants.getTotalPrice(this.props.cart).toFixed(2)}
+                Total: <ProductPrice price={totalPrice} />
               </p>
             </div>
             <table>

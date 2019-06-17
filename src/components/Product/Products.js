@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "./Product.module.css";
 import ProductPrice from "../ProductPrice/ProductPrice";
-import ProductDiscountedPrice from "../ProductDiscountedPrice/ProductDiscountedPrice";
 import constants from "../../constants";
 
 const Product = ({ product, onClick }) => {
@@ -16,11 +15,14 @@ const Product = ({ product, onClick }) => {
       />
       <h2>{product.name}</h2>
       {product.discounted_price === "0.00" ? (
-        <ProductDiscountedPrice price={product.price} />
+        <ProductPrice price={product.price} classPrice="ProductPrice" />
       ) : (
         <div className={classes.Prices}>
-          <ProductPrice price={product.price} />
-          <ProductDiscountedPrice price={product.discounted_price} />
+          <ProductPrice price={product.price} classPrice="OldProductPrice" />
+          <ProductPrice
+            price={product.discounted_price}
+            classPrice="ProductPrice"
+          />
         </div>
       )}
       <p className={classes.Description}>
