@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Categories.module.css";
 import { connect } from "react-redux";
 import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
-import Filters from "../../components/Filters/Filters";
+import Filters from "../Filters/Filters";
 import Product from "../../components/Product/Products";
 import { fetchProducts } from "../../actions";
 

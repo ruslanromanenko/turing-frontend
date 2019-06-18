@@ -9,8 +9,13 @@ import {
   REMOVE_FROM_CART,
   SUBTRACT_PRODUCT,
   ADD_PRODUCT,
-  CHANGE_AMOUNT
-} from "../actions/types";
+  CHANGE_AMOUNT,
+  CATEGORIES_FETCHED,
+  DEPARTMENTS_FETCHED,
+  CATEGORIES_LOADING,
+  DEPARTMENTS_LOADING,
+  FETCH_PRODUCT_BY_CATEGORY
+} from "./types";
 
 const baseUrl = constants.ServerUrl.baseURL;
 
@@ -43,6 +48,59 @@ export const fetchAttributes = productId => dispatch => {
         type: ATTRIBUTES_FETCHED,
         payload: data,
         productId: productId
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
+};
+
+export const fetchCategories = () => dispatch => {
+  dispatch({
+    type: CATEGORIES_LOADING,
+    payload: true
+  });
+  return axios.get(`${baseUrl}categories`).then(
+    ({ data }) => {
+      dispatch({
+        type: CATEGORIES_FETCHED,
+        payload: data.rows
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
+};
+
+export const fetchDepartments = () => dispatch => {
+  dispatch({
+    type: DEPARTMENTS_LOADING,
+    payload: true
+  });
+  return axios.get(`${baseUrl}departments`).then(
+    ({ data }) => {
+      dispatch({
+        type: DEPARTMENTS_FETCHED,
+        payload: data
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
+};
+export const fetchProductsByCategory = categoryId => dispatch => {
+  dispatch({
+    type: PRODUCTS_LOADING,
+    payload: true
+  });
+  return axios.get(`${baseUrl}products/inCategory/${categoryId}`).then(
+    ({ data }) => {
+      dispatch({
+        type: FETCH_PRODUCT_BY_CATEGORY,
+        payload: data.rows
       });
     },
     error => {

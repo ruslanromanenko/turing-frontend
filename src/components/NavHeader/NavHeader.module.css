@@ -7,13 +7,13 @@
     color: white;
 }
 
-.MenuCategories{
+ul.MenuCategories {
     display: flex;
     list-style: none;
     justify-content: space-around;
     flex-basis: 30%;
 }
-.MenuCategories a{
-    color: white;
-    text-decoration: none;
+.MenuCategories li:hover{
+    color: #f62f5e;
+    cursor: pointer;
 }

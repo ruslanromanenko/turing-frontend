@@ -4,8 +4,13 @@ import { connect } from "react-redux";
 import MainHeader from "../../components/MainHeader/MainHeader";
 import NavHeader from "../../components/NavHeader/NavHeader";
 import constants from "../../constants";
+import { fetchDepartments } from "../../actions";
 
 class Header extends React.Component {
+  componentDidMount() {
+    this.props.fetchDepartments();
+  }
+
   getTotalAmount = products => {
     return products.reduce((acc, productInCart) => {
       return (acc += productInCart.amount);
@@ -18,20 +23,27 @@ class Header extends React.Component {
           totalPrice={constants.getTotalPrice(this.props.cart).toFixed(2)}
           totalAmount={this.getTotalAmount(this.props.cart)}
         />
-        <NavHeader />
+        <NavHeader
+          departments={this.props.departments}
+          isLoadingDepartments={this.props.isLoadingDepartments}
+        />
       </header>
     );
   }
 }
 
-const mapStateToProps = ({ cart }) => {
+const mapStateToProps = ({ cart, departments }) => {
   return {
-    cart
+    cart,
+    departments: departments.departments,
+    isLoadingDepartments: departments.isLoadingDepartments
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    fetchDepartments: () => dispatch(fetchDepartments())
+  };
 };
 
 export default connect(

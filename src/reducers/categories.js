@@ -1,13 +1,22 @@
+import { CATEGORIES_FETCHED, CATEGORIES_LOADING } from "../actions/types";
+
 const initialState = {
-  category: []
+  isLoadingCategories: false,
+  categories: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "GET_CATEGORIES":
+    case CATEGORIES_LOADING:
       return {
         ...state,
-        cart: action.payload
+        isLoadingCategories: action.payload
+      };
+    case CATEGORIES_FETCHED:
+      return {
+        ...state,
+        categories: action.payload,
+        isLoadingCategories: false
       };
     default:
       return state;

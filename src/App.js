@@ -14,7 +14,7 @@ class Home extends Component {
         <main>
           <Route path="/" exact render={() => <h1>Home page</h1>} />
           <Route path="/categories" component={Categories} />
-          <Route path="/cart" component={ProductsCart} />
+          <Route path="/cart" exact component={ProductsCart} />
         </main>
         <Footer />
       </React.Fragment>
