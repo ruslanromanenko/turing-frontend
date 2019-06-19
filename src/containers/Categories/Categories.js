@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
 import Filters from "../Filters/Filters";
 import Product from "../../components/Product/Products";
-import { fetchProducts } from "../../actions";
+import { fetchProducts, fetchProductsByCategory } from "../../actions";
+import * as queryString from "query-string";
 
 class Categories extends React.Component {
   state = {
@@ -18,19 +19,24 @@ class Categories extends React.Component {
   };
 
   componentDidMount() {
-    this.props.fetchProducts();
+    const searchParams = queryString.parse(this.props.location.search);
+    if (searchParams.category) {
+      this.props.fetchProductsByCategory(searchParams.category);
+    } else {
+      this.props.fetchProducts();
+    }
   }
 
   handleClickProduct = evt => {
     this.setState({ selectedProductId: evt.currentTarget.id });
   };
 
-  // shouldComponentUpdate(nextProps, nextState, nextContext) {
-  //   return (
-  //     this.props.products.length !== nextProps.products.length ||
-  //     this.state.selectedProductId !== nextState.selectedProductId
-  //   );
-  // }
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.location.search !== this.props.location.search) {
+      const searchParams = queryString.parse(nextProps.location.search);
+      this.props.fetchProductsByCategory(searchParams.category);
+    }
+  }
 
   render() {
     return (
@@ -69,7 +75,9 @@ const mapStateToProps = ({ products }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: () => dispatch(fetchProducts())
+    fetchProducts: () => dispatch(fetchProducts()),
+    fetchProductsByCategory: categoryId =>
+      dispatch(fetchProductsByCategory(categoryId))
   };
 };
 

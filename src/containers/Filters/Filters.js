@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Filters.module.css";
-import { fetchCategories, fetchProductsByCategory } from "../../actions";
+import { fetchCategories } from "../../actions";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -8,9 +8,6 @@ class Filters extends React.Component {
   componentDidMount() {
     this.props.fetchCategories();
   }
-  handleClickCategory = evt => {
-    this.props.fetchProductsByCategory(evt.currentTarget.id);
-  };
 
   render() {
     return (
@@ -21,17 +18,16 @@ class Filters extends React.Component {
             ? "Loading Categories"
             : this.props.categories.map((category, index) => {
                 return (
-                  <li
-                    key={index}
-                    id={category.category_id}
-                    onClick={this.handleClickCategory}
-                  >
+                  <li key={index} id={category.category_id}>
                     <NavLink
-                      to={`/categories/${category.name}`}
-                      activeStyle={{
-                        color: "#f62f5e",
-                        borderBottom: "2px solid #f62f5e"
+                      to={{
+                        pathname: `/categories`,
+                        search: `?category=${category.category_id}`
                       }}
+                      // activeStyle={{
+                      //   color: "#f62f5e",
+                      //   borderBottom: "2px solid #f62f5e"
+                      // }}
                       exact
                     >
                       {category.name}
@@ -54,9 +50,7 @@ const mapStateToProps = ({ categories }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCategories: () => dispatch(fetchCategories()),
-    fetchProductsByCategory: categoryId =>
-      dispatch(fetchProductsByCategory(categoryId))
+    fetchCategories: () => dispatch(fetchCategories())
   };
 };
 

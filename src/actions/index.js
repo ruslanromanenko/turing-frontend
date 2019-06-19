@@ -92,6 +92,7 @@ export const fetchDepartments = () => dispatch => {
   );
 };
 export const fetchProductsByCategory = categoryId => dispatch => {
+  console.log(categoryId);
   dispatch({
     type: PRODUCTS_LOADING,
     payload: true

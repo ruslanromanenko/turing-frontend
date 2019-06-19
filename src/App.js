@@ -13,7 +13,7 @@ class Home extends Component {
         <Header />
         <main>
           <Route path="/" exact render={() => <h1>Home page</h1>} />
-          <Route path="/categories" component={Categories} />
+          <Route path="/categories" axact component={Categories} />
           <Route path="/cart" exact component={ProductsCart} />
         </main>
         <Footer />

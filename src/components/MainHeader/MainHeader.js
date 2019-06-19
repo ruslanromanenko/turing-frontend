@@ -16,13 +16,17 @@ const MainHeader = ({ totalPrice, totalAmount }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/categories" exact>
+            <NavLink
+              to={{
+                pathname: "/categories"
+              }}
+              exact
+            >
               Categories
             </NavLink>
           </li>
         </ul>
       </nav>
-      <span className={classes.Currency}>GBP</span>
       <NavLink to="/cart" className={classes.Cart}>
         <span className={classes.CartHeader}>
           <ShoppingCart />
