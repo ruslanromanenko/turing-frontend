@@ -24,7 +24,7 @@ const NavHeader = props => {
                 <li key={index}>
                   <NavLink
                     to={{
-                      pathName: "/categories",
+                      pathname: "/categories",
                       search: `department=${department.department_id}`
                     }}
                     activeClassName={classes[activeDepartment()]}

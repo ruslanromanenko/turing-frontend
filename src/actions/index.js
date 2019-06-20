@@ -83,7 +83,6 @@ export const fetchCategoriesByDepartment = departmentId => dispatch => {
   });
   return axios.get(`${baseUrl}categories/inDepartment/${departmentId}`).then(
     ({ data }) => {
-      console.log(data);
       dispatch({
         type: FETCH_CATEGORIES_BY_DEPARTMENT,
         payload: data
