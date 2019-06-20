@@ -25,3 +25,8 @@
     cursor: pointer;
     border-bottom: 2px solid #f62f5e;
 }
+
+.Filters .activeCategory{
+    color: #f62f5e;
+    border-bottom: 2px solid #f62f5e;
+}

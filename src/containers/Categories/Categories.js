@@ -4,18 +4,16 @@ import { connect } from "react-redux";
 import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
 import Filters from "../Filters/Filters";
 import Product from "../../components/Product/Products";
-import { fetchProducts, fetchProductsByCategory } from "../../actions";
+import {
+  fetchProducts,
+  fetchProductsByCategory,
+  fetchProductsByDepartment
+} from "../../actions";
 import * as queryString from "query-string";
 
 class Categories extends React.Component {
   state = {
     selectedProductId: null
-  };
-
-  handleClose = () => {
-    this.setState({
-      selectedProductId: null
-    });
   };
 
   componentDidMount() {
@@ -27,16 +25,27 @@ class Categories extends React.Component {
     }
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const searchParams = queryString.parse(nextProps.location.search);
+    if (nextProps.location.search !== this.props.location.search) {
+      if (searchParams.category) {
+        this.props.fetchProductsByCategory(searchParams.category);
+      }
+      if (searchParams.department) {
+        this.props.fetchProductsByDepartment(searchParams.department);
+      }
+    }
+  }
+
+  handleClose = () => {
+    this.setState({
+      selectedProductId: null
+    });
+  };
+
   handleClickProduct = evt => {
     this.setState({ selectedProductId: evt.currentTarget.id });
   };
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.location.search !== this.props.location.search) {
-      const searchParams = queryString.parse(nextProps.location.search);
-      this.props.fetchProductsByCategory(searchParams.category);
-    }
-  }
 
   render() {
     return (
@@ -77,7 +86,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchProducts: () => dispatch(fetchProducts()),
     fetchProductsByCategory: categoryId =>
-      dispatch(fetchProductsByCategory(categoryId))
+      dispatch(fetchProductsByCategory(categoryId)),
+    fetchProductsByDepartment: categoryId =>
+      dispatch(fetchProductsByDepartment(categoryId))
   };
 };
 

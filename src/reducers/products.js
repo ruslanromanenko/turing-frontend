@@ -3,7 +3,8 @@ import {
   PRODUCTS_LOADING,
   ATTRIBUTES_FETCHED,
   ATTRIBUTES_LOADING,
-  FETCH_PRODUCT_BY_CATEGORY
+  FETCH_PRODUCT_BY_CATEGORY,
+  FETCH_PRODUCT_BY_DEPARTMENT
 } from "../actions/types";
 
 const initialState = {
@@ -27,6 +28,12 @@ export default (state = initialState, action) => {
         isLoadingProducts: false
       };
     case FETCH_PRODUCT_BY_CATEGORY:
+      return {
+        ...state,
+        products: action.payload,
+        isLoadingProducts: false
+      };
+    case FETCH_PRODUCT_BY_DEPARTMENT:
       return {
         ...state,
         products: action.payload,

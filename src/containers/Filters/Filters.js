@@ -1,14 +1,23 @@
 import React from "react";
 import classes from "./Filters.module.css";
-import { fetchCategories } from "../../actions";
+import { fetchCategories, fetchCategoriesByDepartment } from "../../actions";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
+import * as queryString from "query-string";
 
 class Filters extends React.Component {
   componentDidMount() {
     this.props.fetchCategories();
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    const searchParams = queryString.parse(nextProps.location.search);
+    if (nextProps.location.search !== this.props.location.search) {
+      if (searchParams.department) {
+        this.props.fetchCategoriesByDepartment(searchParams.department);
+      }
+    }
+  }
   render() {
     return (
       <aside className={classes.Filters}>
@@ -17,18 +26,23 @@ class Filters extends React.Component {
           {this.props.isLoadingCategories
             ? "Loading Categories"
             : this.props.categories.map((category, index) => {
+                const activeCategory = () => {
+                  const searchParams = queryString.parse(
+                    this.props.location.search
+                  );
+                  return (
+                    searchParams.category == category.category_id &&
+                    "activeCategory"
+                  );
+                };
                 return (
                   <li key={index} id={category.category_id}>
                     <NavLink
                       to={{
                         pathname: `/categories`,
-                        search: `?category=${category.category_id}`
+                        search: `category=${category.category_id}`
                       }}
-                      // activeStyle={{
-                      //   color: "#f62f5e",
-                      //   borderBottom: "2px solid #f62f5e"
-                      // }}
-                      exact
+                      activeClassName={classes[activeCategory()]}
                     >
                       {category.name}
                     </NavLink>
@@ -50,11 +64,13 @@ const mapStateToProps = ({ categories }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCategories: () => dispatch(fetchCategories())
+    fetchCategories: () => dispatch(fetchCategories()),
+    fetchCategoriesByDepartment: departmentId =>
+      dispatch(fetchCategoriesByDepartment(departmentId))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Filters);
+)(withRouter(Filters));

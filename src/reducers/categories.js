@@ -1,4 +1,8 @@
-import { CATEGORIES_FETCHED, CATEGORIES_LOADING } from "../actions/types";
+import {
+  CATEGORIES_FETCHED,
+  CATEGORIES_LOADING,
+  FETCH_CATEGORIES_BY_DEPARTMENT
+} from "../actions/types";
 
 const initialState = {
   isLoadingCategories: false,
@@ -13,6 +17,12 @@ export default (state = initialState, action) => {
         isLoadingCategories: action.payload
       };
     case CATEGORIES_FETCHED:
+      return {
+        ...state,
+        categories: action.payload,
+        isLoadingCategories: false
+      };
+    case FETCH_CATEGORIES_BY_DEPARTMENT:
       return {
         ...state,
         categories: action.payload,

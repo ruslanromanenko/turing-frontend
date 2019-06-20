@@ -1,19 +1,42 @@
 import React from "react";
 import classes from "./NavHeader.module.css";
+import { NavLink, withRouter } from "react-router-dom";
+import * as queryString from "query-string";
 
-const NavHeader = ({ departments, isLoadingDepartments }) => {
+const NavHeader = props => {
   return (
     <div className={classes.NavHeader}>
       <div className={classes.Logo} />
       <ul className={classes.MenuCategories}>
-        {isLoadingDepartments
+        {props.isLoadingDepartments
           ? "Loading Departments"
-          : departments.map((department, index) => {
-              return <li key={index}>{department.name}</li>;
+          : props.departments.map((department, index) => {
+              const activeDepartment = () => {
+                const searchParams = queryString.parse(props.location.search);
+                return (
+                  searchParams.department == department.department_id &&
+                  "activeDepartment"
+                );
+              };
+              console.log(props);
+
+              return (
+                <li key={index}>
+                  <NavLink
+                    to={{
+                      pathName: "/categories",
+                      search: `department=${department.department_id}`
+                    }}
+                    activeClassName={classes[activeDepartment()]}
+                  >
+                    {department.name}
+                  </NavLink>
+                </li>
+              );
             })}
       </ul>
       <div className={classes.Search}>Search</div>
     </div>
   );
 };
-export default NavHeader;
+export default withRouter(NavHeader);

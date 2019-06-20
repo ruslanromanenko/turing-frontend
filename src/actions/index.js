@@ -14,7 +14,9 @@ import {
   DEPARTMENTS_FETCHED,
   CATEGORIES_LOADING,
   DEPARTMENTS_LOADING,
-  FETCH_PRODUCT_BY_CATEGORY
+  FETCH_PRODUCT_BY_CATEGORY,
+  FETCH_PRODUCT_BY_DEPARTMENT,
+  FETCH_CATEGORIES_BY_DEPARTMENT
 } from "./types";
 
 const baseUrl = constants.ServerUrl.baseURL;
@@ -74,6 +76,25 @@ export const fetchCategories = () => dispatch => {
   );
 };
 
+export const fetchCategoriesByDepartment = departmentId => dispatch => {
+  dispatch({
+    type: CATEGORIES_LOADING,
+    payload: true
+  });
+  return axios.get(`${baseUrl}categories/inDepartment/${departmentId}`).then(
+    ({ data }) => {
+      console.log(data);
+      dispatch({
+        type: FETCH_CATEGORIES_BY_DEPARTMENT,
+        payload: data
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
+};
+
 export const fetchDepartments = () => dispatch => {
   dispatch({
     type: DEPARTMENTS_LOADING,
@@ -92,7 +113,6 @@ export const fetchDepartments = () => dispatch => {
   );
 };
 export const fetchProductsByCategory = categoryId => dispatch => {
-  console.log(categoryId);
   dispatch({
     type: PRODUCTS_LOADING,
     payload: true
@@ -101,6 +121,23 @@ export const fetchProductsByCategory = categoryId => dispatch => {
     ({ data }) => {
       dispatch({
         type: FETCH_PRODUCT_BY_CATEGORY,
+        payload: data.rows
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
+};
+export const fetchProductsByDepartment = departmentId => dispatch => {
+  dispatch({
+    type: PRODUCTS_LOADING,
+    payload: true
+  });
+  return axios.get(`${baseUrl}products/inDepartment/${departmentId}`).then(
+    ({ data }) => {
+      dispatch({
+        type: FETCH_PRODUCT_BY_DEPARTMENT,
         payload: data.rows
       });
     },

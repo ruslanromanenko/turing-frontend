@@ -17,3 +17,11 @@ ul.MenuCategories {
     color: #f62f5e;
     cursor: pointer;
 }
+.MenuCategories li a{
+    color: white;
+    text-decoration: none;
+}
+
+.MenuCategories .activeDepartment{
+    color: #f62f5e;
+}
