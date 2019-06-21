@@ -14,8 +14,6 @@ import {
   DEPARTMENTS_FETCHED,
   CATEGORIES_LOADING,
   DEPARTMENTS_LOADING,
-  FETCH_PRODUCT_BY_CATEGORY,
-  FETCH_PRODUCT_BY_DEPARTMENT,
   FETCH_CATEGORIES_BY_DEPARTMENT
 } from "./types";
 
@@ -119,7 +117,7 @@ export const fetchProductsByCategory = categoryId => dispatch => {
   return axios.get(`${baseUrl}products/inCategory/${categoryId}`).then(
     ({ data }) => {
       dispatch({
-        type: FETCH_PRODUCT_BY_CATEGORY,
+        type: PRODUCTS_FETCHED,
         payload: data.rows
       });
     },
@@ -136,7 +134,7 @@ export const fetchProductsByDepartment = departmentId => dispatch => {
   return axios.get(`${baseUrl}products/inDepartment/${departmentId}`).then(
     ({ data }) => {
       dispatch({
-        type: FETCH_PRODUCT_BY_DEPARTMENT,
+        type: PRODUCTS_FETCHED,
         payload: data.rows
       });
     },
@@ -144,6 +142,26 @@ export const fetchProductsByDepartment = departmentId => dispatch => {
       // dispatch(apologize('The Sandwich Shop', forPerson, error))
     }
   );
+};
+export const fetchProductsBySearch = queryString => dispatch => {
+  dispatch({
+    type: PRODUCTS_LOADING,
+    payload: true
+  });
+  return axios
+    .get(`${baseUrl}products/search?query_string=${queryString}`)
+    .then(
+      ({ data }) => {
+        console.log(data);
+        dispatch({
+          type: PRODUCTS_FETCHED,
+          payload: data.rows
+        });
+      },
+      error => {
+        // dispatch(apologize('The Sandwich Shop', forPerson, error))
+      }
+    );
 };
 
 export const addingToCart = (

@@ -7,7 +7,8 @@ import Product from "../../components/Product/Products";
 import {
   fetchProducts,
   fetchProductsByCategory,
-  fetchProductsByDepartment
+  fetchProductsByDepartment,
+  fetchProductsBySearch
 } from "../../actions";
 import * as queryString from "query-string";
 
@@ -34,6 +35,9 @@ class Categories extends React.Component {
       if (searchParams.department) {
         this.props.fetchProductsByDepartment(searchParams.department);
       }
+      if (searchParams.search) {
+        this.props.fetchProductsBySearch(searchParams.search);
+      }
     }
   }
 
@@ -52,23 +56,31 @@ class Categories extends React.Component {
       <div className={classes.Categories}>
         <Filters />
         <div className={classes.ProductList}>
-          {this.props.isLoadingProducts
-            ? "Loading product"
-            : this.props.products.map(product => {
-                return (
-                  <Product
-                    product={product}
-                    key={product.product_id}
-                    onClick={this.handleClickProduct}
-                  />
-                );
-              })}
-          {this.state.selectedProductId !== null && (
-            <ProductDetailsModal
-              onClose={this.handleClose}
-              productId={this.state.selectedProductId}
-            />
-          )}
+          <ul className={classes.Pagination}>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+          </ul>
+          <div className={classes.Products}>
+            {this.props.isLoadingProducts
+              ? "Loading product"
+              : this.props.products.map(product => {
+                  return (
+                    <Product
+                      product={product}
+                      key={product.product_id}
+                      onClick={this.handleClickProduct}
+                    />
+                  );
+                })}
+            {this.state.selectedProductId !== null && (
+              <ProductDetailsModal
+                onClose={this.handleClose}
+                productId={this.state.selectedProductId}
+              />
+            )}
+          </div>
         </div>
       </div>
     );
@@ -88,7 +100,9 @@ const mapDispatchToProps = dispatch => {
     fetchProductsByCategory: categoryId =>
       dispatch(fetchProductsByCategory(categoryId)),
     fetchProductsByDepartment: categoryId =>
-      dispatch(fetchProductsByDepartment(categoryId))
+      dispatch(fetchProductsByDepartment(categoryId)),
+    fetchProductsBySearch: queryString =>
+      dispatch(fetchProductsBySearch(queryString))
   };
 };
 

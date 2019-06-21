@@ -1,12 +1,29 @@
 import React from "react";
-import classes from "./NavHeader.module.css";
+import * as classes from "./NavHeader.module.css";
 import { NavLink, withRouter } from "react-router-dom";
 import * as queryString from "query-string";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
 
 const NavHeader = props => {
+  // function setParams({ query }) {
+  //   const searchParams = new URLSearchParams();
+  //   searchParams.set("query", query || "");
+  //   return searchParams.toString();
+  // }
+
+  const handleClickSearch = evt => {
+    props.history.push({
+      search: `search=${evt.currentTarget.ownerDocument.all.inputSearch.value}`
+    });
+  };
   return (
     <div className={classes.NavHeader}>
-      <div className={classes.Logo} />
+      <div className={classes.Logo}>
+        <span>Shopmate</span>
+      </div>
       <ul className={classes.MenuCategories}>
         {props.isLoadingDepartments
           ? "Loading Departments"
@@ -18,7 +35,6 @@ const NavHeader = props => {
                   "activeDepartment"
                 );
               };
-              console.log(props);
 
               return (
                 <li key={index}>
@@ -35,7 +51,24 @@ const NavHeader = props => {
               );
             })}
       </ul>
-      <div className={classes.Search}>Search</div>
+      <div className={classes.Search}>
+        <Paper className={classes.rootInput}>
+          <InputBase
+            className={classes.inputSearch}
+            placeholder="Search"
+            inputProps={{ "aria-label": "Search" }}
+            id="inputSearch"
+          />
+          <IconButton
+            className={classes.searchButton}
+            aria-label="Search"
+            onClick={handleClickSearch}
+            id="buttonSearch"
+          >
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+      </div>
     </div>
   );
 };

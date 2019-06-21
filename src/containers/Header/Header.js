@@ -16,6 +16,7 @@ class Header extends React.Component {
       return (acc += productInCart.amount);
     }, 0);
   };
+
   render() {
     return (
       <header className={classes.Header}>

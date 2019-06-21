@@ -5,6 +5,14 @@
     justify-content: space-between;
     align-items: center;
     color: white;
+    padding: 0 60px;
+}
+
+.Logo{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #f62f5e;
+    font-size: 25px;
 }
 
 ul.MenuCategories {
@@ -24,4 +32,15 @@ ul.MenuCategories {
 
 .MenuCategories .activeDepartment{
     color: #f62f5e;
+}
+.MenuCategories .Search{
+}
+
+.rootInput{
+ border-radius: 20px !important;
+    padding-left: 10px !important;
+}
+
+.searchButton{
+    padding: 6px !important;
 }
