@@ -9,6 +9,7 @@ const initialState = {
   isLoadingProducts: false,
   isLoadingAttributes: false,
   products: [],
+  countProducts: 0,
   openedproductId: null
 };
 
@@ -22,7 +23,8 @@ export default (state = initialState, action) => {
     case PRODUCTS_FETCHED:
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.rows,
+        countProducts: action.payload.count,
         isLoadingProducts: false
       };
     case ATTRIBUTES_LOADING:

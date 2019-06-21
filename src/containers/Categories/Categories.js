@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
 import Filters from "../Filters/Filters";
 import Product from "../../components/Product/Products";
+import TablePagination from "@material-ui/core/TablePagination";
 import {
   fetchProducts,
   fetchProductsByCategory,
@@ -22,7 +23,13 @@ class Categories extends React.Component {
     if (searchParams.category) {
       this.props.fetchProductsByCategory(searchParams.category);
     } else {
-      this.props.fetchProducts();
+      this.props.fetchProducts(
+        queryString.stringify({
+          page: 1,
+          limit: 20,
+          ...searchParams
+        })
+      );
     }
   }
 
@@ -38,6 +45,12 @@ class Categories extends React.Component {
       if (searchParams.search) {
         this.props.fetchProductsBySearch(searchParams.search);
       }
+
+      this.props.fetchProducts(
+        queryString.stringify({
+          ...searchParams
+        })
+      );
     }
   }
 
@@ -51,17 +64,40 @@ class Categories extends React.Component {
     this.setState({ selectedProductId: evt.currentTarget.id });
   };
 
+  changeSearchParameter(parameter, value) {
+    const searchParams = queryString.parse(this.props.location.search);
+    searchParams[parameter] = value;
+    return queryString.stringify(searchParams);
+  }
+
+  handleChangeRowsPerPage = evt => {
+    this.props.history.push({
+      search: `${this.changeSearchParameter("limit", evt.target.value)}`
+    });
+  };
+
+  handleChangePage = (evt, page) => {
+    console.log(this.queryParams);
+    if (page > 0) {
+      this.props.history.push({
+        search: queryString.stringify({
+          ...this.queryParams,
+          page
+        })
+      });
+    }
+  };
+
+  get queryParams() {
+    return queryString.parse(this.props.location.search);
+  }
+
   render() {
+    const { page = 1, limit = 20 } = this.queryParams;
     return (
       <div className={classes.Categories}>
         <Filters />
         <div className={classes.ProductList}>
-          <ul className={classes.Pagination}>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-          </ul>
           <div className={classes.Products}>
             {this.props.isLoadingProducts
               ? "Loading product"
@@ -81,6 +117,14 @@ class Categories extends React.Component {
               />
             )}
           </div>
+          <TablePagination
+            count={this.props.countProducts}
+            onChangePage={this.handleChangePage}
+            page={parseInt(page)}
+            rowsPerPage={parseInt(limit)}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            component="div"
+          />
         </div>
       </div>
     );
@@ -90,13 +134,14 @@ class Categories extends React.Component {
 const mapStateToProps = ({ products }) => {
   return {
     products: products.products,
+    countProducts: products.countProducts,
     isLoadingProducts: products.isLoadingProducts
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: () => dispatch(fetchProducts()),
+    fetchProducts: params => dispatch(fetchProducts(params)),
     fetchProductsByCategory: categoryId =>
       dispatch(fetchProductsByCategory(categoryId)),
     fetchProductsByDepartment: categoryId =>
