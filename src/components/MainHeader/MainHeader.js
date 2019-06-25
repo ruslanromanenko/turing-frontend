@@ -18,11 +18,11 @@ const MainHeader = ({ totalPrice, totalAmount }) => {
           <li>
             <NavLink
               to={{
-                pathname: "/categories"
+                pathname: "/products"
               }}
               exact
             >
-              Categories
+              Products
             </NavLink>
           </li>
         </ul>

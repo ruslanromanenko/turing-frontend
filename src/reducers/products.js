@@ -10,7 +10,7 @@ const initialState = {
   isLoadingAttributes: false,
   products: [],
   countProducts: 0,
-  openedproductId: null
+  openedProductId: null
 };
 
 export default (state = initialState, action) => {
@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         products,
-        openedproductId: action.productId,
+        openedProductId: action.productId,
         isLoadingAttributes: false
       };
     default:

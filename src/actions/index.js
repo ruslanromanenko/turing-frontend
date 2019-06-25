@@ -70,24 +70,23 @@ export const fetchProductsByDepartment = departmentId => dispatch => {
     }
   );
 };
-export const fetchProductsBySearch = queryString => dispatch => {
+export const fetchProductsBySearch = searchParams => dispatch => {
+  console.log(searchParams);
   dispatch({
     type: PRODUCTS_LOADING,
     payload: true
   });
-  return axios
-    .get(`${baseUrl}products/search?query_string=${queryString}`)
-    .then(
-      ({ data }) => {
-        dispatch({
-          type: PRODUCTS_FETCHED,
-          payload: data
-        });
-      },
-      error => {
-        // dispatch(apologize('The Sandwich Shop', forPerson, error))
-      }
-    );
+  return axios.get(`${baseUrl}products/search?${searchParams}`).then(
+    ({ data }) => {
+      dispatch({
+        type: PRODUCTS_FETCHED,
+        payload: data
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
 };
 
 export const fetchAttributes = productId => dispatch => {

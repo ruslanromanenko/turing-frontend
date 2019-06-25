@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import products from "./products";
 import categories from "./categories";
+import products from "./products";
 import departments from "./departments";
 import cart from "./cart";
 

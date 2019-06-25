@@ -1,10 +1,13 @@
 import React from "react";
-import classes from "./Categories.module.css";
+import classes from "./Products.module.css";
 import { connect } from "react-redux";
 import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
 import Filters from "../Filters/Filters";
 import Product from "../../components/Product/Products";
-import TablePagination from "@material-ui/core/TablePagination";
+import ReactPaginate from "react-paginate";
+import NavigateNext from "@material-ui/icons/NavigateNext";
+import NavigateBefore from "@material-ui/icons/NavigateBefore";
+
 import {
   fetchProducts,
   fetchProductsByCategory,
@@ -13,9 +16,10 @@ import {
 } from "../../actions";
 import * as queryString from "query-string";
 
-class Categories extends React.Component {
+class Products extends React.Component {
   state = {
-    selectedProductId: null
+    selectedProductId: null,
+    limit: 5
   };
 
   componentDidMount() {
@@ -26,7 +30,7 @@ class Categories extends React.Component {
       this.props.fetchProducts(
         queryString.stringify({
           page: 1,
-          limit: 20,
+          limit: this.state.limit,
           ...searchParams
         })
       );
@@ -36,21 +40,19 @@ class Categories extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     const searchParams = queryString.parse(nextProps.location.search);
     if (nextProps.location.search !== this.props.location.search) {
+      console.log(searchParams);
+
       if (searchParams.category) {
         this.props.fetchProductsByCategory(searchParams.category);
-      }
-      if (searchParams.department) {
+      } else if (searchParams.department) {
         this.props.fetchProductsByDepartment(searchParams.department);
+      } else if (searchParams.query_string) {
+        this.props.fetchProductsBySearch(
+          queryString.stringify({ ...searchParams })
+        );
+      } else {
+        this.props.fetchProducts(queryString.stringify({ ...searchParams }));
       }
-      if (searchParams.search) {
-        this.props.fetchProductsBySearch(searchParams.search);
-      }
-
-      this.props.fetchProducts(
-        queryString.stringify({
-          ...searchParams
-        })
-      );
     }
   }
 
@@ -64,28 +66,14 @@ class Categories extends React.Component {
     this.setState({ selectedProductId: evt.currentTarget.id });
   };
 
-  changeSearchParameter(parameter, value) {
-    const searchParams = queryString.parse(this.props.location.search);
-    searchParams[parameter] = value;
-    return queryString.stringify(searchParams);
-  }
-
-  handleChangeRowsPerPage = evt => {
+  handleChangePage = page => {
     this.props.history.push({
-      search: `${this.changeSearchParameter("limit", evt.target.value)}`
+      search: queryString.stringify({
+        ...this.queryParams,
+        limit: 5,
+        page: ++page.selected
+      })
     });
-  };
-
-  handleChangePage = (evt, page) => {
-    console.log(this.queryParams);
-    if (page > 0) {
-      this.props.history.push({
-        search: queryString.stringify({
-          ...this.queryParams,
-          page
-        })
-      });
-    }
   };
 
   get queryParams() {
@@ -93,9 +81,8 @@ class Categories extends React.Component {
   }
 
   render() {
-    const { page = 1, limit = 20 } = this.queryParams;
     return (
-      <div className={classes.Categories}>
+      <div className={classes.ProductsBlock}>
         <Filters />
         <div className={classes.ProductList}>
           <div className={classes.Products}>
@@ -117,14 +104,23 @@ class Categories extends React.Component {
               />
             )}
           </div>
-          <TablePagination
-            count={this.props.countProducts}
-            onChangePage={this.handleChangePage}
-            page={parseInt(page)}
-            rowsPerPage={parseInt(limit)}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            component="div"
-          />
+          {this.props.countProducts > this.state.limit && (
+            <ReactPaginate
+              previousLinkClassName={classes.previous}
+              previousLabel={<NavigateBefore />}
+              nextLinkClassName={classes.next}
+              nextLabel={<NavigateNext />}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.props.countProducts / this.state.limit}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={2}
+              onPageChange={this.handleChangePage}
+              containerClassName={classes.Pagination}
+              subContainerClassName={"pages pagination"}
+              activeClassName={classes.Active}
+            />
+          )}
         </div>
       </div>
     );
@@ -141,17 +137,17 @@ const mapStateToProps = ({ products }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchProducts: params => dispatch(fetchProducts(params)),
+    fetchProducts: searchParams => dispatch(fetchProducts(searchParams)),
     fetchProductsByCategory: categoryId =>
       dispatch(fetchProductsByCategory(categoryId)),
     fetchProductsByDepartment: categoryId =>
       dispatch(fetchProductsByDepartment(categoryId)),
-    fetchProductsBySearch: queryString =>
-      dispatch(fetchProductsBySearch(queryString))
+    fetchProductsBySearch: searchParams =>
+      dispatch(fetchProductsBySearch(searchParams))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Categories);
+)(Products);

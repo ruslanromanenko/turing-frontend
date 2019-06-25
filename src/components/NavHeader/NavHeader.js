@@ -8,17 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
 const NavHeader = props => {
-  // function setParams({ query }) {
-  //   const searchParams = new URLSearchParams();
-  //   searchParams.set("query", query || "");
-  //   return searchParams.toString();
-  // }
-
-  const handleClickSearch = evt => {
-    props.history.push({
-      search: `search=${evt.currentTarget.ownerDocument.all.inputSearch.value}`
-    });
-  };
   return (
     <div className={classes.NavHeader}>
       <div className={classes.Logo}>
@@ -40,7 +29,7 @@ const NavHeader = props => {
                 <li key={index}>
                   <NavLink
                     to={{
-                      pathname: "/categories",
+                      pathname: "/products",
                       search: `department=${department.department_id}`
                     }}
                     activeClassName={classes[activeDepartment()]}
@@ -58,11 +47,12 @@ const NavHeader = props => {
             placeholder="Search"
             inputProps={{ "aria-label": "Search" }}
             id="inputSearch"
+            onKeyPress={props.onKeyPressEnter}
           />
           <IconButton
             className={classes.searchButton}
             aria-label="Search"
-            onClick={handleClickSearch}
+            onClick={props.onClickSearch}
             id="buttonSearch"
           >
             <SearchIcon />

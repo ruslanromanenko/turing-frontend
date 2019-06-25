@@ -39,7 +39,7 @@ class Filters extends React.Component {
                   <li key={index} id={category.category_id}>
                     <NavLink
                       to={{
-                        pathname: `/categories`,
+                        pathname: `/products`,
                         search: `category=${category.category_id}`
                       }}
                       activeClassName={classes[activeCategory()]}
