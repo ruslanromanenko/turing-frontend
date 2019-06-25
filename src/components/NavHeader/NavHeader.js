@@ -24,13 +24,20 @@ const NavHeader = props => {
                   "activeDepartment"
                 );
               };
+              const searchParams = queryString.parse(props.location.search);
 
               return (
                 <li key={index}>
                   <NavLink
                     to={{
-                      pathname: "/products",
-                      search: `department=${department.department_id}`
+                      pathname: `/products/department/${
+                        department.department_id
+                      }`,
+                      search: queryString.stringify({
+                        page: 1,
+                        limit: 5,
+                        ...searchParams
+                      })
                     }}
                     activeClassName={classes[activeDepartment()]}
                   >

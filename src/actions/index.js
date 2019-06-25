@@ -53,22 +53,28 @@ export const fetchProductsByCategory = categoryId => dispatch => {
     }
   );
 };
-export const fetchProductsByDepartment = departmentId => dispatch => {
+export const fetchProductsByDepartment = (
+  departmentId,
+  searchParams
+) => dispatch => {
+  console.log(searchParams);
   dispatch({
     type: PRODUCTS_LOADING,
     payload: true
   });
-  return axios.get(`${baseUrl}products/inDepartment/${departmentId}`).then(
-    ({ data }) => {
-      dispatch({
-        type: PRODUCTS_FETCHED,
-        payload: data
-      });
-    },
-    error => {
-      // dispatch(apologize('The Sandwich Shop', forPerson, error))
-    }
-  );
+  return axios
+    .get(`${baseUrl}products/inDepartment/${departmentId}?${searchParams}`)
+    .then(
+      ({ data }) => {
+        dispatch({
+          type: PRODUCTS_FETCHED,
+          payload: data
+        });
+      },
+      error => {
+        // dispatch(apologize('The Sandwich Shop', forPerson, error))
+      }
+    );
 };
 export const fetchProductsBySearch = searchParams => dispatch => {
   console.log(searchParams);

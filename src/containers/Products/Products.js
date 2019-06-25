@@ -22,6 +22,33 @@ class Products extends React.Component {
     limit: 5
   };
 
+  componentWillUpdate(nextProps, nextState) {
+    const searchParams = queryString.parse(nextProps.location.search);
+    if (
+      nextProps.location.search !== this.props.location.search ||
+      nextProps.location.pathname !== this.props.location.pathname
+    ) {
+      if (searchParams.category) {
+        this.props.fetchProductsByCategory(searchParams.category);
+      } else if (this.props.location.pathname.includes("department")) {
+        const pathElements = this.props.location.pathname.split("/");
+
+        const departmentId = pathElements[pathElements.length - 1];
+
+        this.props.fetchProductsByDepartment(
+          departmentId,
+          queryString.stringify({ ...searchParams })
+        );
+      } else if (searchParams.query_string) {
+        this.props.fetchProductsBySearch(
+          queryString.stringify({ ...searchParams })
+        );
+      } else {
+        this.props.fetchProducts(queryString.stringify({ ...searchParams }));
+      }
+    }
+  }
+
   componentDidMount() {
     const searchParams = queryString.parse(this.props.location.search);
     if (searchParams.category) {
@@ -34,25 +61,6 @@ class Products extends React.Component {
           ...searchParams
         })
       );
-    }
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    const searchParams = queryString.parse(nextProps.location.search);
-    if (nextProps.location.search !== this.props.location.search) {
-      console.log(searchParams);
-
-      if (searchParams.category) {
-        this.props.fetchProductsByCategory(searchParams.category);
-      } else if (searchParams.department) {
-        this.props.fetchProductsByDepartment(searchParams.department);
-      } else if (searchParams.query_string) {
-        this.props.fetchProductsBySearch(
-          queryString.stringify({ ...searchParams })
-        );
-      } else {
-        this.props.fetchProducts(queryString.stringify({ ...searchParams }));
-      }
     }
   }
 
@@ -140,8 +148,8 @@ const mapDispatchToProps = dispatch => {
     fetchProducts: searchParams => dispatch(fetchProducts(searchParams)),
     fetchProductsByCategory: categoryId =>
       dispatch(fetchProductsByCategory(categoryId)),
-    fetchProductsByDepartment: categoryId =>
-      dispatch(fetchProductsByDepartment(categoryId)),
+    fetchProductsByDepartment: (departmentId, searchParams) =>
+      dispatch(fetchProductsByDepartment(departmentId, searchParams)),
     fetchProductsBySearch: searchParams =>
       dispatch(fetchProductsBySearch(searchParams))
   };
