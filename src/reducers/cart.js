@@ -70,6 +70,7 @@ export default (state = initialState, action) => {
     case CHANGE_AMOUNT:
       return state.map(product => {
         if (action.id == product.key) {
+          // TODO make === do not use ==
           return {
             ...product,
             amount: parseInt(action.value)

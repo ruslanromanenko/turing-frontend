@@ -15,7 +15,7 @@ const Product = ({ product, onClick }) => {
       />
       <h2>{product.name}</h2>
       {product.discounted_price === "0.00" ? (
-        <ProductPrice price={product.price} classPrice="ProductPrice" />
+        <ProductPrice price={product.price} classPrice="ProductPrice" /> // TODO make it className not classPrice
       ) : (
         <div className={classes.Prices}>
           <ProductPrice price={product.price} classPrice="OldProductPrice" />

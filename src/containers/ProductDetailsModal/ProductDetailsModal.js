@@ -44,6 +44,7 @@ class ProductDetailsModal extends React.Component {
   };
 
   handleAddToCart = evt => {
+    // TODO pass config like an object
     this.props.addToCart(
       evt.currentTarget.id,
       this.state.colorId,
