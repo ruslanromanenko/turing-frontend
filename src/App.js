@@ -13,7 +13,7 @@ class Home extends Component {
         <Header />
         <main>
           <Route path="/" exact render={() => <h1>Home page</h1>} />
-          <Route path="/products" exact component={Products} />
+          <Route path="/products" component={Products} />
           <Route path="/cart" exact component={ProductsCart} />
         </main>
         <Footer />

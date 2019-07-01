@@ -7,12 +7,10 @@ import * as queryString from "query-string";
 
 class Filters extends React.Component {
   componentDidMount() {
-    // TODO do we need that fetch here?
     this.props.fetchCategories();
   }
 
   componentWillUpdate(nextProps, nextState) {
-    // TODO do we need that fetch here?
     const searchParams = queryString.parse(nextProps.location.search);
     if (nextProps.location.search !== this.props.location.search) {
       if (searchParams.department) {

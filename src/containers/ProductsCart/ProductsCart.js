@@ -8,7 +8,7 @@ import {
   removingFromCart,
   subtractingProduct
 } from "../../actions";
-import constants from "../../constants";
+import utils from "../../utils";
 import ProductPrice from "../../components/ProductPrice/ProductPrice";
 
 class ProductsCart extends Component {
@@ -20,7 +20,8 @@ class ProductsCart extends Component {
   }
 
   getAmount(productId, colorId, sizeId) {
-    const product = this.props.cart.find(product => {
+    console.log(this.props.productsInCart);
+    const product = this.props.productsInCart.find(product => {
       return (
         product.product.product_id == productId &&
         product.colorId == colorId &&
@@ -49,11 +50,13 @@ class ProductsCart extends Component {
   };
 
   render() {
-    const totalPrice = constants.getTotalPrice(this.props.cart).toFixed(2);
+    const totalPrice = utils
+      .getTotalPrice(this.props.productsInCart)
+      .toFixed(2);
 
     return (
       <div className={classes.ProductsCart}>
-        {this.props.cart.length === 0 ? (
+        {this.props.productsInCart.length === 0 ? (
           <h2>Cart is empty</h2>
         ) : (
           <React.Fragment>
@@ -74,7 +77,7 @@ class ProductsCart extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.cart.map((productInCart, index) => {
+                {this.props.productsInCart.map((productInCart, index) => {
                   const product = productInCart.product;
                   return (
                     <ProductCart
@@ -112,11 +115,10 @@ class ProductsCart extends Component {
 
 const mapStateToProps = ({ cart, products }) => {
   return {
-    cart,
+    productsInCart: cart.products,
     products: products.products
   };
 };
-
 const mapDispatchToProps = dispatch => {
   return {
     removeFromCart: uniqueKey => dispatch(removingFromCart(uniqueKey)),

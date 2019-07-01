@@ -3,7 +3,7 @@ import classes from "./Products.module.css";
 import { connect } from "react-redux";
 import ProductDetailsModal from "../ProductDetailsModal/ProductDetailsModal";
 import Filters from "../Filters/Filters";
-import Product from "../../components/Product/Products";
+import Product from "../../components/Product/Product";
 import ReactPaginate from "react-paginate";
 import NavigateNext from "@material-ui/icons/NavigateNext";
 import NavigateBefore from "@material-ui/icons/NavigateBefore";
@@ -23,22 +23,18 @@ class Products extends React.Component {
   };
 
   componentWillUpdate(nextProps, nextState) {
-    const searchParams = queryString.parse(nextProps.location.search);
+    const searchParams = queryString.parse(this.props.history.location.search);
     if (
       nextProps.location.search !== this.props.location.search ||
       nextProps.location.pathname !== this.props.location.pathname
     ) {
       if (searchParams.category) {
         this.props.fetchProductsByCategory(searchParams.category);
-      } else if (this.props.location.pathname.includes("department")) {
-        const pathElements = this.props.location.pathname.split("/");
-
-        const departmentId = pathElements[pathElements.length - 1];
-
-        this.props.fetchProductsByDepartment(
-          departmentId,
-          queryString.stringify({ ...searchParams })
-        );
+      } else if (searchParams.department) {
+        this.props.fetchProductsByDepartment({
+          departmentId: searchParams.department,
+          searchParams: queryString.stringify({ ...searchParams })
+        });
       } else if (searchParams.query_string) {
         this.props.fetchProductsBySearch(
           queryString.stringify({ ...searchParams })
@@ -148,8 +144,8 @@ const mapDispatchToProps = dispatch => {
     fetchProducts: searchParams => dispatch(fetchProducts(searchParams)),
     fetchProductsByCategory: categoryId =>
       dispatch(fetchProductsByCategory(categoryId)),
-    fetchProductsByDepartment: (departmentId, searchParams) =>
-      dispatch(fetchProductsByDepartment(departmentId, searchParams)),
+    fetchProductsByDepartment: params =>
+      dispatch(fetchProductsByDepartment(params)),
     fetchProductsBySearch: searchParams =>
       dispatch(fetchProductsBySearch(searchParams))
   };

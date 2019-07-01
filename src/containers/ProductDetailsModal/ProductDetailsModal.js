@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import ProductPrice from "../../components/ProductPrice/ProductPrice";
 import ProductColor from "../../components/ProductColor/ProductColor";
 import ProductSize from "../../components/ProductSize/ProductSize";
-import { fetchAttributes, addingToCart } from "../../actions";
+import { fetchAttributes, addingToCart, generationCart } from "../../actions";
 import Button from "@material-ui/core/Button/index";
 import constants from "../../constants";
 import { Link } from "react-router-dom";
@@ -44,18 +44,19 @@ class ProductDetailsModal extends React.Component {
   };
 
   handleAddToCart = evt => {
-    // TODO pass config like an object
-    this.props.addToCart(
-      evt.currentTarget.id,
-      this.state.colorId,
-      this.state.sizeId,
-      this.getProduct()
-    );
+    this.props.addToCart({
+      productId: evt.currentTarget.id,
+      colorId: this.state.colorId,
+      sizeId: this.state.sizeId,
+      product: this.getProduct()
+    });
     this.setState({
       colorId: null,
       sizeId: null,
       isAdded: true
     });
+
+    this.props.generateCart();
   };
 
   handleSelectColor = evt => {
@@ -81,6 +82,7 @@ class ProductDetailsModal extends React.Component {
       isAdded: true
     });
   };
+
   getProduct() {
     const productIndex = this.props.products.findIndex(
       product => product.product_id == this.props.productId
@@ -222,8 +224,8 @@ const mapStateToProps = ({ products }) => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchAttributes: productId => dispatch(fetchAttributes(productId)),
-    addToCart: (productId, colorId, sizeId, product) =>
-      dispatch(addingToCart(productId, colorId, sizeId, product))
+    addToCart: details => dispatch(addingToCart(details)),
+    generateCart: () => dispatch(generationCart())
   };
 };
 

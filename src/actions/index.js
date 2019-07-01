@@ -14,7 +14,8 @@ import {
   DEPARTMENTS_FETCHED,
   CATEGORIES_LOADING,
   DEPARTMENTS_LOADING,
-  FETCH_CATEGORIES_BY_DEPARTMENT
+  FETCH_CATEGORIES_BY_DEPARTMENT,
+  GENERATION_CART
 } from "./types";
 
 const baseUrl = constants.ServerUrl.baseURL;
@@ -53,17 +54,18 @@ export const fetchProductsByCategory = categoryId => dispatch => {
     }
   );
 };
-export const fetchProductsByDepartment = (
-  departmentId,
-  searchParams
-) => dispatch => {
+export const fetchProductsByDepartment = searchParams => dispatch => {
   console.log(searchParams);
   dispatch({
     type: PRODUCTS_LOADING,
     payload: true
   });
   return axios
-    .get(`${baseUrl}products/inDepartment/${departmentId}?${searchParams}`)
+    .get(
+      `${baseUrl}products/inDepartment/${searchParams.departmentId}?${
+        searchParams.searchParams
+      }`
+    )
     .then(
       ({ data }) => {
         dispatch({
@@ -77,7 +79,6 @@ export const fetchProductsByDepartment = (
     );
 };
 export const fetchProductsBySearch = searchParams => dispatch => {
-  console.log(searchParams);
   dispatch({
     type: PRODUCTS_LOADING,
     payload: true
@@ -167,20 +168,24 @@ export const fetchDepartments = () => dispatch => {
     }
   );
 };
-
-export const addingToCart = (
-  productId,
-  colorId,
-  sizeId,
-  product
-) => dispatch => {
+export const addingToCart = details => dispatch => {
   return dispatch({
     type: ADD_TO_CART,
-    productId,
-    colorId,
-    sizeId,
-    product
+    payload: details
   });
+};
+export const generationCart = () => dispatch => {
+  return axios.get(`${baseUrl}shoppingcart/generateUniqueId`).then(
+    ({ data }) => {
+      dispatch({
+        type: GENERATION_CART,
+        payload: data
+      });
+    },
+    error => {
+      // dispatch(apologize('The Sandwich Shop', forPerson, error))
+    }
+  );
 };
 export const removingFromCart = uniqueKey => dispatch => {
   return dispatch({
