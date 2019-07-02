@@ -3,5 +3,3 @@ export default {
     baseURL: "https://backendapi.turing.com/"
   }
 };
-
-
