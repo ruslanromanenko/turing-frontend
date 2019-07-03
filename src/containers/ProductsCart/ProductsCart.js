@@ -20,7 +20,6 @@ class ProductsCart extends Component {
   }
 
   getAmount(productId, colorId, sizeId) {
-    console.log(this.props.productsInCart);
     const product = this.props.productsInCart.find(product => {
       return (
         product.product.product_id == productId &&
